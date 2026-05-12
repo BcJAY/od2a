@@ -2,1003 +2,1525 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Where's Your Home? 🏠</title>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+<title>Two Stubborn Little Goats — Reading Game Suite</title>
 <style>
-:root {
-  --sky: #5BC8F5;
-  --sky-light: #E8F7FF;
-  --sun: #FFD93D;
-  --grass: #6BCB77;
-  --coral: #FF6B6B;
-  --purple: #A78BFA;
-  --white: #FFFFFF;
-  --card-shadow: 0 12px 40px rgba(0,0,0,0.15);
-  --correct: #6BCB77;
-  --wrong: #FF6B6B;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'Nunito', sans-serif;
-  background: linear-gradient(180deg, #87CEEB 0%, #C9EEFF 55%, #A8E6A3 100%);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-x: hidden;
-  position: relative;
-}
-/* Floating clouds */
-.cloud {
-  position: fixed;
-  background: white;
-  border-radius: 50px;
-  opacity: 0.75;
-  pointer-events: none;
-  z-index: 0;
-}
-.cloud::before, .cloud::after {
-  content: '';
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-}
-.cloud-1 { width: 140px; height: 55px; top: 8%; left: 5%; animation: drift1 35s linear infinite; }
-.cloud-1::before { width: 75px; height: 75px; top: -35px; left: 15px; }
-.cloud-1::after  { width: 55px; height: 55px; top: -20px; left: 60px; }
-.cloud-2 { width: 100px; height: 40px; top: 15%; right: 8%; animation: drift2 45s linear infinite; }
-.cloud-2::before { width: 55px; height: 55px; top: -28px; left: 10px; }
-.cloud-2::after  { width: 40px; height: 40px; top: -18px; left: 45px; }
-.cloud-3 { width: 120px; height: 45px; top: 3%; left: 55%; animation: drift1 55s linear infinite reverse; }
-.cloud-3::before { width: 60px; height: 60px; top: -30px; left: 12px; }
-.cloud-3::after  { width: 45px; height: 45px; top: -20px; left: 55px; }
-@keyframes drift1 { 0%{transform:translateX(-200px)} 100%{transform:translateX(120vw)} }
-@keyframes drift2 { 0%{transform:translateX(200px)} 100%{transform:translateX(-120vw)} }
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Patrick+Hand&family=Caveat:wght@600;700&display=swap');
 
-/* Game container */
-#app {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  max-width: 640px;
-  padding: 16px;
-}
-.screen { display: none; animation: slideIn 0.4s ease; }
-.screen.active { display: block; }
-@keyframes slideIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
+  :root {
+    --sky: #c9e3d4;
+    --sky-2: #e8d9b8;
+    --earth: #6b4423;
+    --earth-dark: #4a2d18;
+    --grass: #6b9342;
+    --grass-dark: #4a6f2a;
+    --brown-goat: #8b5a3c;
+    --black-goat: #2c2420;
+    --water: #3d6b8c;
+    --paper: #f5ead4;
+    --paper-dark: #e8d9b8;
+    --gold: #d4a73e;
+    --red: #c44536;
+    --green-check: #4a8c3a;
+    --shadow: rgba(74, 45, 24, 0.25);
+  }
 
-/* Game card */
-.card {
-  background: white;
-  border-radius: 32px;
-  padding: 36px 32px;
-  box-shadow: var(--card-shadow);
-  text-align: center;
-  border: 4px solid var(--sky);
-}
-.card-title {
-  font-family: 'Fredoka One', cursive;
-  font-size: 2.2rem;
-  color: #2563EB;
-  line-height: 1.1;
-  margin-bottom: 6px;
-}
-.card-sub {
-  font-size: 1rem;
-  color: #64748B;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
-.emoji-hero { font-size: 4rem; margin-bottom: 14px; display: block; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Progress bar */
-.progress-wrap { background: #E5E7EB; border-radius: 20px; height: 14px; margin-bottom: 24px; overflow: hidden; }
-.progress-bar { height: 100%; background: linear-gradient(90deg, #6BCB77, #5BC8F5); border-radius: 20px; transition: width 0.5s ease; }
+  body {
+    font-family: 'Fredoka', sans-serif;
+    background: 
+      radial-gradient(ellipse at top, var(--sky) 0%, var(--sky-2) 60%, #d4b88e 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: var(--earth-dark);
+    overflow-x: hidden;
+  }
 
-/* Score chip */
-.score-chip {
-  display: inline-block;
-  background: var(--sun);
-  color: #92400E;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.2rem;
-  padding: 6px 18px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-}
+  /* Decorative mountains in background */
+  body::before {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30vh;
+    background: 
+      linear-gradient(transparent, rgba(107, 147, 66, 0.3)),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='none'><polygon points='0,300 150,120 300,180 450,80 600,150 750,60 900,140 1050,90 1200,160 1200,300' fill='%236b9342' opacity='0.4'/><polygon points='0,300 100,200 250,150 400,210 550,170 700,220 850,180 1000,230 1200,200 1200,300' fill='%234a6f2a' opacity='0.5'/></svg>");
+    background-size: cover;
+    background-position: bottom;
+    pointer-events: none;
+    z-index: -1;
+  }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.3rem;
-  padding: 14px 36px;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-  box-shadow: 0 5px 0 rgba(0,0,0,0.2);
-}
-.btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
-.btn-primary { background: #2563EB; color: white; }
-.btn-primary:hover { background: #1D4ED8; }
-.btn-green  { background: #16A34A; color: white; }
-.btn-coral  { background: #EF4444; color: white; }
+  .stage {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
 
-/* Name input */
-.name-input {
-  width: 100%;
-  padding: 16px 20px;
-  font-size: 1.3rem;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  border: 3px solid #93C5FD;
-  border-radius: 20px;
-  outline: none;
-  text-align: center;
-  margin-bottom: 20px;
-  color: #1E3A5F;
-}
-.name-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 30px 20px 20px;
+    position: relative;
+  }
 
-/* Vocab card */
-.vocab-card {
-  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
-  border: 3px solid #93C5FD;
-  border-radius: 24px;
-  padding: 28px 24px;
-  margin: 0 auto 20px;
-  max-width: 420px;
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.vocab-card:hover { transform: scale(1.02); }
-.vocab-word {
-  font-family: 'Fredoka One', cursive;
-  font-size: 2rem;
-  color: #1D4ED8;
-  text-transform: capitalize;
-}
-.vocab-emoji { font-size: 3.5rem; margin: 8px 0; display: block; }
-.zh-bubble {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--sun);
-  color: #7C2D12;
-  padding: 8px 18px;
-  border-radius: 50px;
-  margin: 10px auto;
-  font-weight: 900;
-  font-size: 1.1rem;
-}
-.zh-text { font-size: 1.4rem; }
-.pinyin { font-size: 0.85rem; color: #92400E; margin-top: 2px; }
-.vocab-def {
-  font-size: 1rem;
-  color: #374151;
-  font-weight: 700;
-  margin-top: 12px;
-  background: #F0FDF4;
-  border-radius: 12px;
-  padding: 10px;
-}
-.vocab-counter {
-  font-size: 0.9rem;
-  color: #6B7280;
-  font-weight: 700;
-  margin-bottom: 14px;
-}
+  .title-banner {
+    display: inline-block;
+    background: var(--earth);
+    color: var(--paper);
+    padding: 18px 50px;
+    border-radius: 8px;
+    border: 5px solid var(--earth-dark);
+    box-shadow: 
+      0 8px 0 var(--earth-dark),
+      0 12px 30px var(--shadow);
+    transform: rotate(-1.5deg);
+    position: relative;
+  }
 
-/* Quiz */
-.question-text {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: #1E293B;
-  margin-bottom: 8px;
-  line-height: 1.5;
-}
-.question-hint {
-  background: #FEF9C3;
-  border: 2px dashed #FDE047;
-  border-radius: 12px;
-  padding: 8px 14px;
-  font-size: 0.95rem;
-  color: #713F12;
-  font-weight: 700;
-  margin-bottom: 16px;
-  display: inline-block;
-}
-.choices-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 16px;
-}
-.choice-btn {
-  padding: 14px 10px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 1.05rem;
-  border: 3px solid #93C5FD;
-  border-radius: 16px;
-  cursor: pointer;
-  background: #EFF6FF;
-  color: #1E3A5F;
-  transition: all 0.15s;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-.choice-btn:hover:not(:disabled) { background: #DBEAFE; border-color: #2563EB; transform: scale(1.03); }
-.choice-btn.correct  { background: #DCFCE7; border-color: #16A34A; color: #166534; animation: pulse 0.4s; }
-.choice-btn.wrong    { background: #FEE2E2; border-color: #DC2626; color: #991B1B; animation: shake 0.4s; }
-.choice-btn:disabled { cursor: default; }
-.choice-zh { font-size: 1rem; color: #6B7280; }
-@keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
-@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+  .title-banner::before, .title-banner::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 3px solid var(--earth-dark);
+    transform: translateY(-50%);
+  }
+  .title-banner::before { left: -10px; }
+  .title-banner::after { right: -10px; }
 
-/* Matching quiz */
-.match-grid {
-  display: flex;
-  gap: 16px;
-  margin-top: 10px;
-  justify-content: center;
-}
-.match-col { display: flex; flex-direction: column; gap: 10px; flex: 1; }
-.match-btn {
-  padding: 12px 8px;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-  font-size: 0.95rem;
-  border-radius: 14px;
-  border: 3px solid transparent;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-align: center;
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.match-word { background: #EDE9FE; color: #4C1D95; border-color: #C4B5FD; }
-.match-word:hover:not(:disabled):not(.used) { background: #DDD6FE; border-color: #7C3AED; }
-.match-word.selected { background: #7C3AED; color: white; border-color: #5B21B6; }
-.match-def { background: #FEF3C7; color: #78350F; border-color: #FDE68A; font-size: 0.88rem; }
-.match-def:hover:not(:disabled):not(.used) { background: #FDE68A; border-color: #D97706; }
-.match-def.selected { background: #D97706; color: white; border-color: #92400E; }
-.match-btn.matched-ok { background: #DCFCE7; border-color: #16A34A; color: #166534; cursor: default; animation: pulse 0.4s; }
-.match-btn.matched-fail { animation: shake 0.4s; }
-.match-btn.used { opacity: 0.45; cursor: default; }
+  h1 {
+    font-family: 'Caveat', cursive;
+    font-size: 3rem;
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--gold);
+    text-shadow: 3px 3px 0 var(--earth-dark);
+  }
 
-/* Address form */
-.address-field {
-  margin-bottom: 16px;
-  text-align: left;
-}
-.address-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 900;
-  font-size: 1rem;
-  color: #1E3A5F;
-  margin-bottom: 6px;
-}
-.address-zh { font-size: 0.9rem; color: #6B7280; font-weight: 700; }
-.address-input {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 1.1rem;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 700;
-  border: 3px solid #93C5FD;
-  border-radius: 14px;
-  outline: none;
-  color: #1E3A5F;
-}
-.address-input:focus { border-color: #2563EB; }
+  .subtitle {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.3rem;
+    color: var(--earth-dark);
+    margin-top: 15px;
+    opacity: 0.85;
+  }
 
-/* Where do you live */
-.where-choices {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin: 20px 0;
-}
-.where-btn {
-  padding: 20px 10px;
-  border-radius: 20px;
-  border: 4px solid transparent;
-  cursor: pointer;
-  background: #F1F5F9;
-  transition: all 0.15s;
-  font-family: 'Nunito', sans-serif;
-  font-weight: 800;
-}
-.where-btn:hover { transform: scale(1.05); }
-.where-btn.selected { border-color: #2563EB; background: #DBEAFE; }
-.where-emoji { font-size: 2.2rem; display: block; margin-bottom: 6px; }
-.where-eng { font-size: 0.95rem; color: #1E293B; }
-.where-zh  { font-size: 0.85rem; color: #64748B; }
+  /* SCORE BAR */
+  .score-bar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px auto 30px;
+    padding: 15px 30px;
+    background: var(--paper);
+    border: 4px solid var(--earth);
+    border-radius: 50px;
+    max-width: 500px;
+    box-shadow: 0 6px 0 var(--earth-dark), 0 10px 20px var(--shadow);
+    font-family: 'Patrick Hand', cursive;
+  }
 
-/* Feedback popup */
-.feedback-overlay {
-  position: fixed; inset: 0; z-index: 50;
-  display: flex; align-items: center; justify-content: center;
-  background: rgba(0,0,0,0.35);
-  animation: fadeIn 0.2s;
-}
-.feedback-box {
-  background: white;
-  border-radius: 28px;
-  padding: 36px 40px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  max-width: 340px;
-  animation: popIn 0.3s;
-}
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-@keyframes popIn { from{transform:scale(0.7)} to{transform:scale(1)} }
-.feedback-emoji { font-size: 4rem; display: block; margin-bottom: 10px; }
-.feedback-title { font-family: 'Fredoka One', cursive; font-size: 2rem; margin-bottom: 6px; }
-.feedback-msg { font-size: 1rem; font-weight: 700; color: #374151; margin-bottom: 20px; }
-.feedback-pts { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #16A34A; }
+  .score-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
 
-/* Results */
-.result-score {
-  font-family: 'Fredoka One', cursive;
-  font-size: 4rem;
-  color: #2563EB;
-  line-height: 1;
-}
-.result-label { font-size: 1rem; color: #64748B; font-weight: 700; margin-bottom: 16px; }
-.stars { font-size: 2.5rem; letter-spacing: 4px; margin-bottom: 20px; display: block; }
-.result-msg { font-size: 1.1rem; font-weight: 800; color: #374151; margin-bottom: 24px; background: #F0FDF4; border-radius: 16px; padding: 14px; }
+  .score-item .icon {
+    font-size: 1.8rem;
+  }
 
-/* Scoreboard */
-.scoreboard-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-.scoreboard-table th {
-  background: #2563EB; color: white;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.05rem; padding: 10px 12px;
-}
-.scoreboard-table th:first-child { border-radius: 12px 0 0 0; }
-.scoreboard-table th:last-child  { border-radius: 0 12px 0 0; }
-.scoreboard-table td { padding: 10px 12px; font-weight: 700; font-size: 1rem; border-bottom: 2px solid #E5E7EB; }
-.scoreboard-table tr:nth-child(even) td { background: #F8FAFC; }
-.rank-1 td { background: #FFFBEB !important; color: #78350F; }
-.rank-2 td { background: #F1F5F9 !important; }
-.rank-3 td { background: #FFF7ED !important; }
-.rank-medal { font-size: 1.3rem; }
-.no-scores { color: #9CA3AF; font-weight: 700; padding: 30px; font-size: 1.1rem; }
-.btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+  .score-value {
+    background: var(--gold);
+    color: var(--earth-dark);
+    padding: 2px 14px;
+    border-radius: 20px;
+    border: 2px solid var(--earth-dark);
+    min-width: 50px;
+    text-align: center;
+    font-weight: 700;
+  }
 
-/* Confetti */
-.confetti-piece {
-  position: fixed;
-  width: 12px; height: 12px;
-  border-radius: 2px;
-  pointer-events: none;
-  z-index: 100;
-  animation: confettiFall 1.2s ease-in forwards;
-}
-@keyframes confettiFall {
-  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
+  /* GAME NAV */
+  .game-nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin: 0 auto 30px;
+    max-width: 1100px;
+    padding: 0 10px;
+  }
 
-/* Divider */
-.divider { height: 3px; background: linear-gradient(90deg,#93C5FD,#A5F3FC,#93C5FD); border-radius: 4px; margin: 20px 0; }
+  .nav-btn {
+    background: var(--paper);
+    border: 4px solid var(--earth);
+    border-radius: 15px;
+    padding: 15px 8px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--earth-dark);
+    transition: all 0.2s;
+    box-shadow: 0 5px 0 var(--earth-dark);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .nav-btn .nav-icon {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 5px;
+  }
+
+  .nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--earth-dark);
+  }
+
+  .nav-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--earth-dark);
+  }
+
+  .nav-btn.active {
+    background: var(--gold);
+    transform: translateY(2px);
+    box-shadow: 0 3px 0 var(--earth-dark);
+  }
+
+  /* GAME PANELS */
+  .game-panel {
+    display: none;
+    background: var(--paper);
+    border: 5px solid var(--earth);
+    border-radius: 20px;
+    padding: 35px 30px;
+    box-shadow: 
+      0 8px 0 var(--earth-dark),
+      0 15px 40px var(--shadow);
+    position: relative;
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .game-panel.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Paper texture */
+  .game-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 15px;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(139, 90, 60, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(139, 90, 60, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 18px;
+    border-bottom: 3px dashed var(--earth);
+    position: relative;
+  }
+
+  .panel-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2.4rem;
+    color: var(--earth-dark);
+    line-height: 1;
+  }
+
+  .panel-subtitle {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+
+  .progress-pill {
+    background: var(--earth);
+    color: var(--paper);
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: 3px solid var(--earth-dark);
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: white;
+    border: 3px solid var(--earth);
+    border-radius: 15px;
+    padding: 25px 28px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 0 var(--earth-dark);
+    position: relative;
+  }
+
+  .q-number {
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    background: var(--red);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border: 3px solid var(--earth-dark);
+    box-shadow: 0 3px 0 var(--earth-dark);
+  }
+
+  .q-text {
+    font-size: 1.25rem;
+    color: var(--earth-dark);
+    margin: 5px 0 18px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  /* MULTIPLE CHOICE OPTIONS */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .option-btn {
+    background: var(--sky);
+    border: 3px solid var(--earth);
+    border-radius: 12px;
+    padding: 16px 20px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--earth-dark);
+    transition: all 0.2s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 0 var(--earth-dark);
+  }
+
+  .option-btn .opt-letter {
+    background: var(--paper);
+    border: 2px solid var(--earth-dark);
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .option-btn:hover:not(.disabled) {
+    background: var(--sky-2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--earth-dark);
+  }
+
+  .option-btn:active:not(.disabled) {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--earth-dark);
+  }
+
+  .option-btn.correct {
+    background: var(--green-check);
+    color: white;
+    border-color: #2d5a1f;
+    animation: correctPulse 0.6s ease-out;
+  }
+  .option-btn.correct .opt-letter {
+    background: white;
+    color: var(--green-check);
+  }
+
+  .option-btn.wrong {
+    background: var(--red);
+    color: white;
+    border-color: #8a2e25;
+    animation: wrongShake 0.5s;
+  }
+  .option-btn.wrong .opt-letter {
+    background: white;
+    color: var(--red);
+  }
+
+  .option-btn.disabled { cursor: not-allowed; opacity: 0.6; }
+
+  @keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+
+  /* FEEDBACK MESSAGE */
+  .feedback {
+    margin-top: 18px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    display: none;
+    animation: fadeIn 0.4s;
+  }
+
+  .feedback.show { display: block; }
+
+  .feedback.success {
+    background: #e0f0d4;
+    border: 3px dashed var(--green-check);
+    color: var(--grass-dark);
+  }
+
+  .feedback.error {
+    background: #fce5e2;
+    border: 3px dashed var(--red);
+    color: #8a2e25;
+  }
+
+  /* MISTAKE GAME */
+  .mistake-sentence {
+    font-size: 1.4rem;
+    font-family: 'Patrick Hand', cursive;
+    background: #fffbf0;
+    padding: 22px 28px;
+    border-radius: 15px;
+    border: 3px solid var(--earth);
+    box-shadow: 0 4px 0 var(--earth-dark);
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+
+  .mistake-word {
+    display: inline-block;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    margin: 0 1px;
+  }
+
+  .mistake-word:hover {
+    background: var(--gold);
+    transform: scale(1.08);
+  }
+
+  .mistake-word.found {
+    background: var(--green-check);
+    color: white;
+    text-decoration: line-through;
+  }
+
+  .mistake-word.miss {
+    background: var(--red);
+    color: white;
+    animation: wrongShake 0.4s;
+  }
+
+  .correction-area {
+    background: #fff8e0;
+    border: 3px dashed var(--gold);
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 15px;
+    display: none;
+  }
+
+  .correction-area.show { display: block; }
+
+  .correction-area h4 {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    color: var(--earth-dark);
+    margin-bottom: 8px;
+  }
+
+  .correction-text {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.3rem;
+    color: var(--grass-dark);
+    font-weight: 600;
+  }
+
+  /* QA & THINKING CARDS */
+  .think-card {
+    background: white;
+    border: 3px solid var(--earth);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 0 var(--earth-dark);
+    position: relative;
+  }
+
+  .think-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--earth-dark);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-family: 'Patrick Hand', cursive;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 2px solid var(--earth-dark);
+    margin-bottom: 12px;
+  }
+
+  .think-tag.character { background: #f4b393; }
+  .think-tag.setting { background: #a8d5e3; }
+  .think-tag.theme { background: #c8a4d4; }
+  .think-tag.plot { background: #f0d878; }
+  .think-tag.creative { background: #b8e0c4; }
+  .think-tag.funny { background: #ffc8d8; }
+  .think-tag.critical { background: #ffb84d; }
+
+  .think-question {
+    font-size: 1.2rem;
+    color: var(--earth-dark);
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  .reveal-btn {
+    background: var(--earth);
+    color: var(--paper);
+    border: 3px solid var(--earth-dark);
+    border-radius: 25px;
+    padding: 10px 22px;
+    cursor: pointer;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 15px;
+    box-shadow: 0 4px 0 var(--earth-dark);
+    transition: all 0.2s;
+  }
+
+  .reveal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--earth-dark);
+  }
+
+  .reveal-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--earth-dark);
+  }
+
+  .answer-key {
+    background: linear-gradient(135deg, #fff8e0 0%, #fef0c8 100%);
+    border: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-top: 18px;
+    position: relative;
+    box-shadow: 0 3px 0 #b8902f;
+    transition: all 0.3s;
+  }
+
+  .answer-key.hidden {
+    display: none;
+  }
+
+  .answer-key-label {
+    display: inline-block;
+    background: var(--earth);
+    color: var(--paper);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-family: 'Patrick Hand', cursive;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 2px solid var(--earth-dark);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .answer-key-text {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.2rem;
+    color: var(--earth-dark);
+    line-height: 1.55;
+  }
+
+  /* CONTROL BAR */
+  .control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 3px dashed var(--earth);
+  }
+
+  .ctrl-btn {
+    background: var(--grass);
+    color: white;
+    border: 3px solid var(--grass-dark);
+    border-radius: 25px;
+    padding: 12px 28px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    box-shadow: 0 5px 0 var(--grass-dark);
+    transition: all 0.2s;
+  }
+
+  .ctrl-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--grass-dark);
+  }
+
+  .ctrl-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px 0 var(--grass-dark);
+  }
+
+  .ctrl-btn.secondary {
+    background: var(--paper);
+    color: var(--earth-dark);
+    border-color: var(--earth);
+    box-shadow: 0 5px 0 var(--earth-dark);
+  }
+
+  .ctrl-btn.secondary:hover {
+    box-shadow: 0 7px 0 var(--earth-dark);
+  }
+
+  .ctrl-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* TEAM SCORE for class games */
+  .team-scores {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .team-card {
+    flex: 1;
+    background: white;
+    border: 3px solid var(--earth);
+    border-radius: 15px;
+    padding: 14px;
+    text-align: center;
+    box-shadow: 0 4px 0 var(--earth-dark);
+  }
+
+  .team-card.brown { background: #e8c9a8; }
+  .team-card.black { background: #c8b8a8; }
+
+  .team-name {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+
+  .team-points {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--earth-dark);
+  }
+
+  .team-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .team-controls button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--earth-dark);
+    background: var(--paper);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--earth-dark);
+    box-shadow: 0 2px 0 var(--earth-dark);
+  }
+
+  .team-controls button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 var(--earth-dark);
+  }
+
+  /* COMPLETION CARD */
+  .complete-card {
+    text-align: center;
+    padding: 40px 30px;
+    background: linear-gradient(135deg, #fff8e0, #f5ead4);
+    border: 4px dashed var(--gold);
+    border-radius: 20px;
+    margin: 20px 0;
+    display: none;
+  }
+
+  .complete-card.show { display: block; animation: fadeIn 0.5s; }
+
+  .complete-card h3 {
+    font-family: 'Caveat', cursive;
+    font-size: 2.5rem;
+    color: var(--earth-dark);
+    margin-bottom: 12px;
+  }
+
+  .complete-card p {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 1.3rem;
+    color: var(--earth);
+  }
+
+  .trophy {
+    font-size: 5rem;
+    display: inline-block;
+    animation: bounce 1s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    font-family: 'Patrick Hand', cursive;
+    color: var(--earth-dark);
+    opacity: 0.7;
+    font-size: 1.05rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+    .game-nav { grid-template-columns: repeat(2, 1fr); }
+    .options-grid { grid-template-columns: 1fr; }
+    .panel-title { font-size: 1.8rem; }
+    .score-bar { flex-wrap: wrap; gap: 15px; }
+    .control-bar { flex-direction: column; }
+    .ctrl-btn { width: 100%; }
+  }
+
+  /* Decorative goat doodles */
+  .goat-doodle {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.15;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
 
-<!-- Floating clouds -->
-<div class="cloud cloud-1"></div>
-<div class="cloud cloud-2"></div>
-<div class="cloud cloud-3"></div>
+<div class="stage">
 
-<div id="app">
+  <!-- HEADER -->
+  <header>
+    <div class="title-banner">
+      <h1>Two Stubborn Little Goats</h1>
+      <div class="subtitle">~ Reading Comprehension Game Suite ~</div>
+    </div>
+  </header>
 
-  <!-- ═══════════════ WELCOME SCREEN ═══════════════ -->
-  <div id="screen-welcome" class="screen active">
-    <div class="card">
-      <span class="emoji-hero">🏠</span>
-      <div class="card-title">Where's Your Home?</div>
-      <div class="card-sub">你住在哪裡？ — A Learning Adventure!</div>
-      <div class="divider"></div>
-      <p style="font-weight:800;color:#374151;margin-bottom:14px;font-size:1.05rem">
-        👋 What is your name? 你叫什麼名字？
-      </p>
-      <input class="name-input" id="playerName" type="text" placeholder="Type your name here! ✏️" maxlength="30">
-      <br>
-      <button class="btn btn-primary" onclick="startGame()">Let's Go! 🚀</button>
-      <p style="margin-top:16px;font-size:0.88rem;color:#9CA3AF;font-weight:700">
-        🏆 Earn up to 100 points!
-      </p>
+  <!-- SCORE BAR -->
+  <div class="score-bar">
+    <div class="score-item">
+      <span class="icon">⭐</span>
+      <span>Stars</span>
+      <span class="score-value" id="totalStars">0</span>
+    </div>
+    <div class="score-item">
+      <span class="icon">🏆</span>
+      <span>Correct</span>
+      <span class="score-value" id="totalCorrect">0</span>
     </div>
   </div>
 
-  <!-- ═══════════════ VOCAB SCREEN ═══════════════ -->
-  <div id="screen-vocab" class="screen">
-    <div class="card">
-      <div class="score-chip">⭐ <span id="vocab-score">0</span> pts</div>
-      <div class="card-title">📚 Word Time!</div>
-      <div class="card-sub">學單詞 — Learn the words!</div>
-      <div class="progress-wrap"><div class="progress-bar" id="vocab-progress" style="width:0%"></div></div>
-      <div class="vocab-counter" id="vocab-counter">Word 1 of 8</div>
-      <div id="vocab-display"></div>
-      <button class="btn btn-primary" id="vocab-next-btn" onclick="nextVocab()" style="margin-top:10px">
-        Next Word ➡️
-      </button>
-    </div>
-  </div>
+  <!-- GAME NAV -->
+  <nav class="game-nav">
+    <button class="nav-btn active" data-game="mc">
+      <span class="nav-icon">🎯</span>
+      Reading<br>Quiz
+    </button>
+    <button class="nav-btn" data-game="mistake">
+      <span class="nav-icon">🔍</span>
+      Find the<br>Mistake
+    </button>
+    <button class="nav-btn" data-game="qa">
+      <span class="nav-icon">📖</span>
+      Story<br>Elements
+    </button>
+    <button class="nav-btn" data-game="critical">
+      <span class="nav-icon">🤔</span>
+      Critical &<br>Funny
+    </button>
+    <button class="nav-btn" data-game="creative">
+      <span class="nav-icon">✨</span>
+      Creative<br>Questions
+    </button>
+  </nav>
 
-  <!-- ═══════════════ QUIZ 1: Fill in Blank ═══════════════ -->
-  <div id="screen-quiz1" class="screen">
-    <div class="card">
-      <div class="score-chip">⭐ <span id="q1-score">0</span> pts</div>
-      <div class="card-title">✏️ Fill in the Blank!</div>
-      <div class="card-sub">填空題 — Pick the right word!</div>
-      <div class="progress-wrap"><div class="progress-bar" id="q1-progress" style="width:0%"></div></div>
-      <div id="q1-display"></div>
-    </div>
-  </div>
-
-  <!-- ═══════════════ QUIZ 2: Matching ═══════════════ -->
-  <div id="screen-quiz2" class="screen">
-    <div class="card">
-      <div class="score-chip">⭐ <span id="q2-score">0</span> pts</div>
-      <div class="card-title">🔗 Match It!</div>
-      <div class="card-sub">配對 — Tap word, then tap meaning!</div>
-      <div class="progress-wrap"><div class="progress-bar" id="q2-progress" style="width:100%"></div></div>
-      <div id="q2-display"></div>
-    </div>
-  </div>
-
-  <!-- ═══════════════ QUIZ 3: My Address ═══════════════ -->
-  <div id="screen-quiz3" class="screen">
-    <div class="card">
-      <div class="score-chip">⭐ <span id="q3-score">0</span> pts</div>
-      <span class="emoji-hero">🏡</span>
-      <div class="card-title">My Address!</div>
-      <div class="card-sub">我的地址 — Write where YOU live!</div>
-      <div style="background:#FEF3C7;border:2px dashed #FDE047;border-radius:14px;padding:12px 16px;margin-bottom:20px;font-size:0.95rem;font-weight:700;color:#713F12;text-align:left">
-        💡 地址 (address) tells us WHERE you live!<br>
-        A full address has: <strong>Number + Street + City</strong>
+  <!-- ====================== -->
+  <!-- GAME 1: MULTIPLE CHOICE -->
+  <!-- ====================== -->
+  <section class="game-panel active" id="game-mc">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">🎯 Reading Comprehension Quiz</div>
+        <div class="panel-subtitle">Tap the correct answer · 1 star per correct answer</div>
       </div>
-      <div id="q3-fields">
-        <div class="address-field">
-          <div class="address-label">🔢 House Number <span class="address-zh">門牌號碼 (mén pái hào mǎ)</span></div>
-          <input class="address-input" id="addr-number" type="text" placeholder="e.g. 123">
+      <div class="progress-pill" id="mcProgress">1 / 10</div>
+    </div>
+
+    <div id="mcContainer"></div>
+
+    <div class="complete-card" id="mcComplete">
+      <div class="trophy">🏆</div>
+      <h3>Excellent reading!</h3>
+      <p id="mcFinalScore"></p>
+    </div>
+
+    <div class="control-bar">
+      <button class="ctrl-btn secondary" id="mcPrev">◀ Previous</button>
+      <button class="ctrl-btn" id="mcNext">Next ▶</button>
+    </div>
+  </section>
+
+  <!-- ====================== -->
+  <!-- GAME 2: FIND THE MISTAKE -->
+  <!-- ====================== -->
+  <section class="game-panel" id="game-mistake">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">🔍 Find the Mistake!</div>
+        <div class="panel-subtitle">Click the wrong word · Then say the correct sentence aloud!</div>
+      </div>
+      <div class="progress-pill" id="mistakeProgress">1 / 10</div>
+    </div>
+
+    <div class="team-scores">
+      <div class="team-card brown">
+        <div class="team-name">🐐 Brown Goat Team</div>
+        <div class="team-points" id="brownScore">0</div>
+        <div class="team-controls">
+          <button onclick="changeTeamScore('brown', -1)">−</button>
+          <button onclick="changeTeamScore('brown', 1)">+</button>
         </div>
-        <div class="address-field">
-          <div class="address-label">🛣️ Street Name <span class="address-zh">街道 (jiē dào)</span></div>
-          <input class="address-input" id="addr-street" type="text" placeholder="e.g. Sunshine Road">
+      </div>
+      <div class="team-card black">
+        <div class="team-name">🐐 Black Goat Team</div>
+        <div class="team-points" id="blackScore">0</div>
+        <div class="team-controls">
+          <button onclick="changeTeamScore('black', -1)">−</button>
+          <button onclick="changeTeamScore('black', 1)">+</button>
         </div>
-        <div class="address-field">
-          <div class="address-label">🌆 Town / City <span class="address-zh">城市 (chéng shì)</span></div>
-          <input class="address-input" id="addr-city" type="text" placeholder="e.g. Kaohsiung">
-        </div>
-      </div>
-      <div id="q3-preview" style="display:none;margin-bottom:16px;"></div>
-      <button class="btn btn-primary" onclick="submitAddress()">Done! ✅</button>
-    </div>
-  </div>
-
-  <!-- ═══════════════ QUIZ 4: Where Do You Live? ═══════════════ -->
-  <div id="screen-quiz4" class="screen">
-    <div class="card">
-      <div class="score-chip">⭐ <span id="q4-score">0</span> pts</div>
-      <span class="emoji-hero">🌍</span>
-      <div class="card-title">Where Do You Live?</div>
-      <div class="card-sub">你住在哪種地方？— Tap where you live!</div>
-      <div class="where-choices">
-        <button class="where-btn" onclick="selectWhere(this,'town')">
-          <span class="where-emoji">🏘️</span>
-          <span class="where-eng">A Town</span><br>
-          <span class="where-zh">鄉鎮</span>
-        </button>
-        <button class="where-btn" onclick="selectWhere(this,'city')">
-          <span class="where-emoji">🌆</span>
-          <span class="where-eng">A City</span><br>
-          <span class="where-zh">城市</span>
-        </button>
-        <button class="where-btn" onclick="selectWhere(this,'country')">
-          <span class="where-emoji">🌾</span>
-          <span class="where-eng">The Country</span><br>
-          <span class="where-zh">鄉下</span>
-        </button>
-      </div>
-      <div id="q4-sentence" style="display:none;background:#EFF6FF;border-radius:16px;padding:14px;margin-bottom:16px;">
-        <p style="font-weight:800;color:#1E3A5F;font-size:1rem">Now write about it!</p>
-        <p style="font-size:0.95rem;color:#374151;font-weight:700;margin:8px 0">
-          I live in <span id="q4-place" style="color:#2563EB"></span>. It is a <span id="q4-type" style="color:#2563EB"></span>.
-        </p>
-      </div>
-      <button class="btn btn-green" id="q4-submit" onclick="submitWhere()" style="display:none">
-        That's me! 🎉
-      </button>
-    </div>
-  </div>
-
-  <!-- ═══════════════ RESULTS SCREEN ═══════════════ -->
-  <div id="screen-results" class="screen">
-    <div class="card">
-      <span id="result-trophy" class="emoji-hero">🏆</span>
-      <div class="card-title" id="result-name-title">Great Job!</div>
-      <div class="result-score" id="result-score-num">0</div>
-      <div class="result-label">out of 100 points</div>
-      <span class="stars" id="result-stars">⭐⭐⭐</span>
-      <div class="result-msg" id="result-msg">Amazing work!</div>
-      <div class="divider"></div>
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="goToScoreboard()">🏆 Scoreboard</button>
-        <button class="btn btn-green" onclick="newPlayer()">👤 Next Player</button>
       </div>
     </div>
-  </div>
 
-  <!-- ═══════════════ SCOREBOARD SCREEN ═══════════════ -->
-  <div id="screen-scoreboard" class="screen">
-    <div class="card">
-      <span class="emoji-hero">🏆</span>
-      <div class="card-title">Scoreboard!</div>
-      <div class="card-sub">排行榜 — How did everyone do?</div>
-      <div id="scoreboard-table-wrap"></div>
-      <div class="divider"></div>
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="newPlayer()">👤 New Player</button>
-        <button class="btn btn-coral" onclick="clearScoreboard()">🗑️ Clear All</button>
-      </div>
+    <div id="mistakeContainer"></div>
+
+    <div class="control-bar">
+      <button class="ctrl-btn secondary" id="mistakePrev">◀ Previous</button>
+      <button class="ctrl-btn" id="mistakeNext">Next ▶</button>
     </div>
-  </div>
+  </section>
 
-</div><!-- #app -->
+  <!-- ====================== -->
+  <!-- GAME 3: STORY ELEMENTS QA -->
+  <!-- ====================== -->
+  <section class="game-panel" id="game-qa">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">📖 Story Element Questions</div>
+        <div class="panel-subtitle">Open-ended · Characters · Setting · Theme · Plot</div>
+      </div>
+      <div class="progress-pill" id="qaProgress">1 / 12</div>
+    </div>
 
-<!-- Feedback Overlay -->
-<div class="feedback-overlay" id="feedback-overlay" style="display:none" onclick="closeFeedback()">
-  <div class="feedback-box" onclick="event.stopPropagation()">
-    <span class="feedback-emoji" id="fb-emoji">🎉</span>
-    <div class="feedback-title" id="fb-title">Correct!</div>
-    <div class="feedback-msg" id="fb-msg">Great job!</div>
-    <div class="feedback-pts" id="fb-pts">+10 pts</div>
-    <br><br>
-    <button class="btn btn-primary" onclick="closeFeedback()">Next ➡️</button>
-  </div>
+    <div id="qaContainer"></div>
+
+    <div class="control-bar">
+      <button class="ctrl-btn secondary" id="qaPrev">◀ Previous</button>
+      <button class="ctrl-btn" id="qaNext">Next ▶</button>
+    </div>
+  </section>
+
+  <!-- ====================== -->
+  <!-- GAME 4: CRITICAL THINKING + FUNNY -->
+  <!-- ====================== -->
+  <section class="game-panel" id="game-critical">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">🤔 Critical Thinking & Funny Questions</div>
+        <div class="panel-subtitle">Think deeply · Laugh loudly · Discuss together</div>
+      </div>
+      <div class="progress-pill" id="criticalProgress">1 / 12</div>
+    </div>
+
+    <div id="criticalContainer"></div>
+
+    <div class="control-bar">
+      <button class="ctrl-btn secondary" id="criticalPrev">◀ Previous</button>
+      <button class="ctrl-btn" id="criticalNext">Next ▶</button>
+    </div>
+  </section>
+
+  <!-- ====================== -->
+  <!-- GAME 5: CREATIVE QUESTIONS -->
+  <!-- ====================== -->
+  <section class="game-panel" id="game-creative">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">✨ Creative Questions</div>
+        <div class="panel-subtitle">Imagine · Invent · Re-tell the story your way</div>
+      </div>
+      <div class="progress-pill" id="creativeProgress">1 / 10</div>
+    </div>
+
+    <div id="creativeContainer"></div>
+
+    <div class="control-bar">
+      <button class="ctrl-btn secondary" id="creativePrev">◀ Previous</button>
+      <button class="ctrl-btn" id="creativeNext">Next ▶</button>
+    </div>
+  </section>
+
+  <footer>
+    🐐 Made for English learners · "Don't be stubborn — share the grass!" 🌿
+  </footer>
+
 </div>
 
 <script>
-// ─── GAME DATA ───
-const vocab = [
-  { word: 'address',      zh: '地址',    pinyin: 'dì zhǐ',        def: 'Tells us WHERE you live! Every home has one.',   emoji: '📍' },
-  { word: 'street',       zh: '街道',    pinyin: 'jiē dào',       def: 'The road where your home is!',                   emoji: '🛣️' },
-  { word: 'house number', zh: '門牌號碼', pinyin: 'mén pái hào mǎ',def: 'The special number on your home.',              emoji: '🔢' },
-  { word: 'city',         zh: '城市',    pinyin: 'chéng shì',     def: 'A BIG place with LOTS of people and tall buildings!', emoji: '🌆' },
-  { word: 'town',         zh: '鄉鎮',    pinyin: 'xiāng zhèn',    def: 'Smaller than a city — fewer people!',            emoji: '🏘️' },
-  { word: 'apartment',    zh: '公寓',    pinyin: 'gōng yù',       def: 'A home inside a big building.',                  emoji: '🏢' },
-  { word: 'neighborhood', zh: '社區',    pinyin: 'shè qū',        def: 'Where families live, work, and play!',           emoji: '🏡' },
-  { word: 'world',        zh: '世界',    pinyin: 'shì jiè',       def: 'Everywhere on Earth!',                           emoji: '🌍' },
+/* ============================
+   DATA — All game questions
+   ============================ */
+
+// GAME 1: Multiple Choice Reading Comprehension
+const mcQuestions = [
+  {
+    q: "Where did the family of goats live?",
+    options: ["East Mountain", "West Mountain", "North Mountain", "South Mountain"],
+    correct: 0
+  },
+  {
+    q: "What did Black Goat and Brown Goat always fight about?",
+    options: ["Who was the tallest", "Who was the best in the family", "Who was the youngest", "Who was the strongest"],
+    correct: 1
+  },
+  {
+    q: "What does 'stubborn' mean in the story?",
+    options: ["Very happy and kind", "They never said sorry or 'I'm wrong'", "They were very sleepy", "They liked to play games"],
+    correct: 1
+  },
+  {
+    q: "Why did Brown Goat say HE should eat the grass?",
+    options: ["He was the oldest brother", "He was the smartest brother", "He was the hungriest", "He was the smallest"],
+    correct: 0
+  },
+  {
+    q: "Why did Black Goat say HE should eat the grass?",
+    options: ["He was the oldest", "He was the smartest brother", "He was the strongest", "He was the fastest"],
+    correct: 1
+  },
+  {
+    q: "What did the two goats use to push each other?",
+    options: ["Their feet", "Their tails", "Their horns", "Their teeth"],
+    correct: 2
+  },
+  {
+    q: "Why didn't they move forward or backward?",
+    options: ["They were too tired", "They pushed with the same force", "The grass was slippery", "It was raining"],
+    correct: 1
+  },
+  {
+    q: "Where did Brown Goat cross the bridge to drink water?",
+    options: ["East Mountain pond", "West Mountain pond", "The river", "The lake"],
+    correct: 1
+  },
+  {
+    q: "Brown Goat always crossed the bridge ___ and Black Goat always crossed ___.",
+    options: ["late / early", "early / late", "fast / slow", "slow / fast"],
+    correct: 1
+  },
+  {
+    q: "What finally happened to the two stubborn goats?",
+    options: ["They became friends", "They fell into the river", "They went home for dinner", "They found more grass"],
+    correct: 1
+  }
 ];
 
-const fillBlankQ = [
+// GAME 2: Find the Mistake — wrong word and what it should be
+// Format: sentence as array of word objects { text, wrong (correct answer) }
+const mistakeQuestions = [
   {
-    before: 'The', blank: '___',  after: 'is very big, and people live in all kinds of places.',
-    answer: 'world',
-    choices: [
-      { word: 'world',       zh: '世界', emoji: '🌍' },
-      { word: 'city',        zh: '城市', emoji: '🌆' },
-      { word: 'apartment',   zh: '公寓', emoji: '🏢' },
-      { word: 'street',      zh: '街道', emoji: '🛣️' },
+    words: [
+      {text:"A"},{text:"long"},{text:"time"},{text:"ago,"},{text:"a"},{text:"family"},{text:"of"},
+      {text:"cows", wrong:"goats"},{text:"lived"},{text:"on"},{text:"East"},{text:"Mountain."}
     ],
-    hint: '🌍 This is the biggest place of all!'
+    correct: "A long time ago, a family of goats lived on East Mountain."
   },
   {
-    before: 'Some homes are houses. Some homes are', blank: '___', after: '.',
-    answer: 'apartments',
-    choices: [
-      { word: 'apartments',  zh: '公寓', emoji: '🏢' },
-      { word: 'towns',       zh: '鄉鎮', emoji: '🏘️' },
-      { word: 'streets',     zh: '街道', emoji: '🛣️' },
-      { word: 'cities',      zh: '城市', emoji: '🌆' },
+    words: [
+      {text:"Black"},{text:"Goat"},{text:"and"},{text:"Brown"},{text:"Goat"},{text:"always"},
+      {text:"sang", wrong:"fought"},{text:"about"},{text:"who"},{text:"was"},{text:"the"},{text:"best."}
     ],
-    hint: '🏢 This type of home is inside a tall building!'
+    correct: "Black Goat and Brown Goat always fought about who was the best."
   },
   {
-    before: 'A', blank: '___', after: 'is where families live, work, and play.',
-    answer: 'neighborhood',
-    choices: [
-      { word: 'neighborhood', zh: '社區', emoji: '🏡' },
-      { word: 'world',        zh: '世界', emoji: '🌍' },
-      { word: 'city',         zh: '城市', emoji: '🌆' },
-      { word: 'address',      zh: '地址', emoji: '📍' },
+    words: [
+      {text:"They"},{text:"were"},{text:"very"},{text:"friendly,", wrong:"stubborn,"},{text:"they"},
+      {text:"never"},{text:"said"},{text:"sorry."}
     ],
-    hint: '🏡 社區 — a community!'
+    correct: "They were very stubborn, they never said sorry."
   },
   {
-    before: 'Cities are like very big', blank: '___', after: '.',
-    answer: 'towns',
-    choices: [
-      { word: 'towns',       zh: '鄉鎮', emoji: '🏘️' },
-      { word: 'apartments',  zh: '公寓', emoji: '🏢' },
-      { word: 'worlds',      zh: '世界', emoji: '🌍' },
-      { word: 'addresses',   zh: '地址', emoji: '📍' },
+    words: [
+      {text:"Brown"},{text:"Goat"},{text:"said,"},{text:"\"I'm"},{text:"the"},
+      {text:"youngest", wrong:"oldest"},{text:"brother,"},{text:"so"},{text:"I"},{text:"should"},{text:"eat"},{text:"the"},{text:"grass.\""}
     ],
-    hint: '🏘️ It is SMALLER than a city!'
+    correct: "Brown Goat said, \"I'm the oldest brother, so I should eat the grass.\""
   },
   {
-    before: 'There are a lot of people and big buildings in a', blank: '___', after: '.',
-    answer: 'city',
-    choices: [
-      { word: 'city',        zh: '城市', emoji: '🌆' },
-      { word: 'town',        zh: '鄉鎮', emoji: '🏘️' },
-      { word: 'street',      zh: '街道', emoji: '🛣️' },
-      { word: 'neighborhood',zh: '社區', emoji: '🏡' },
+    words: [
+      {text:"Black"},{text:"Goat"},{text:"said,"},{text:"\"I'm"},{text:"the"},
+      {text:"strongest", wrong:"smartest"},{text:"brother"},{text:"in"},{text:"the"},{text:"family.\""}
     ],
-    hint: '🌆 城市 — very big with skyscrapers!'
+    correct: "Black Goat said, \"I'm the smartest brother in the family.\""
   },
+  {
+    words: [
+      {text:"They"},{text:"pushed"},{text:"each"},{text:"other"},{text:"with"},{text:"their"},
+      {text:"tails.", wrong:"horns."}
+    ],
+    correct: "They pushed each other with their horns."
+  },
+  {
+    words: [
+      {text:"They"},{text:"pushed"},{text:"with"},{text:"the"},{text:"same"},
+      {text:"speed,", wrong:"force,"},{text:"so"},{text:"they"},{text:"didn't"},{text:"move."}
+    ],
+    correct: "They pushed with the same force, so they didn't move."
+  },
+  {
+    words: [
+      {text:"There"},{text:"was"},{text:"a"},{text:"very"},
+      {text:"wide", wrong:"narrow"},{text:"bridge"},{text:"between"},{text:"East"},{text:"and"},{text:"West"},{text:"Mountain."}
+    ],
+    correct: "There was a very narrow bridge between East and West Mountain."
+  },
+  {
+    words: [
+      {text:"Brown"},{text:"Goat"},{text:"crossed"},{text:"it"},{text:"to"},{text:"drink"},
+      {text:"the"},{text:"hottest,", wrong:"coldest"},{text:"water."}
+    ],
+    correct: "Brown Goat crossed it to drink the coldest water."
+  },
+  {
+    words: [
+      {text:"They"},{text:"both"},{text:"got"},{text:"tired"},{text:"and"},{text:"fell"},{text:"into"},{text:"the"},
+      {text:"ocean", wrong:"river"},{text:"below"},{text:"the"},{text:"bridge."}
+    ],
+    correct: "They both got tired and fell into the river below the bridge."
+  }
 ];
 
-const matchPairs = [
-  { word: 'address',      def: '📍 WHERE you live',          wZh: '地址',    dZh: '你住的地方' },
-  { word: 'street',       def: '🛣️ The road by your home',   wZh: '街道',    dZh: '你家旁的路' },
-  { word: 'city',         def: '🌆 Big place, many people',  wZh: '城市',    dZh: '大城鎮，人很多' },
-  { word: 'neighborhood', def: '🏡 Where we live & play',    wZh: '社區',    dZh: '生活和玩耍的地方' },
-  { word: 'apartment',    def: '🏢 Home in a big building',  wZh: '公寓',    dZh: '高樓裡的家' },
+// GAME 3: Story Element Q&A (no multiple choice)
+const qaQuestions = [
+  {
+    tag: "character", tagLabel: "👥 Characters",
+    q: "Who are the two main characters in this story?",
+    hint: "Sample: The two main characters are Brown Goat and Black Goat. They are brothers who live in the same family on East Mountain."
+  },
+  {
+    tag: "character", tagLabel: "👥 Characters",
+    q: "How would you describe Brown Goat and Black Goat? What kind of personalities do they have?",
+    hint: "Sample: Both goats are very stubborn. Brown Goat thinks he is the best because he is the oldest. Black Goat thinks he is the best because he is the smartest. They never say sorry."
+  },
+  {
+    tag: "setting", tagLabel: "📍 Setting",
+    q: "Where does the story happen? Describe all the different places.",
+    hint: "Sample: The story happens on East Mountain, on West Mountain, on a narrow bridge between the two mountains, and in the river below the bridge."
+  },
+  {
+    tag: "setting", tagLabel: "📍 Setting",
+    q: "When does the story take place? How do you know?",
+    hint: "Sample: It starts \"A long time ago.\" The first big problem happens \"one day\" when they fight over grass. The bridge fight happens on another day."
+  },
+  {
+    tag: "plot", tagLabel: "📜 Plot",
+    q: "What is the FIRST problem in the story?",
+    hint: "Sample: There is only a small patch of grass — only enough for one goat. Brown and Black Goat both want to eat it and they push each other with their horns."
+  },
+  {
+    tag: "plot", tagLabel: "📜 Plot",
+    q: "What is the SECOND problem in the story?",
+    hint: "Sample: Brown Goat got up late, so both goats meet on the narrow bridge at the same time. They both want to cross first."
+  },
+  {
+    tag: "plot", tagLabel: "📜 Plot",
+    q: "What happens at the end of the story? How do the goats feel?",
+    hint: "Sample: Both goats fall into the river. They swim to the riverbank and slowly walk home. They feel angry, tired, wet, cold, and hungry."
+  },
+  {
+    tag: "theme", tagLabel: "💡 Theme",
+    q: "What lesson does this story teach us? What is the message?",
+    hint: "Sample: Don't be stubborn. We should share with others, say sorry, and not fight. If we are too stubborn, bad things will happen — like falling in the river!"
+  },
+  {
+    tag: "theme", tagLabel: "💡 Theme",
+    q: "Why is the title 'Two STUBBORN Little Goats'? Why is the word 'stubborn' important?",
+    hint: "Sample: The title tells us the most important problem in the story is that the goats are stubborn. Their stubbornness is the reason for all their trouble."
+  },
+  {
+    tag: "plot", tagLabel: "📜 Plot",
+    q: "Why didn't the goats move forward or backward when they pushed?",
+    hint: "Sample: Because they pushed with the same force. When two forces are equal and opposite, nothing moves. (Like Newton's third law in science class!)"
+  },
+  {
+    tag: "character", tagLabel: "👥 Characters",
+    q: "Do the goats change at the end of the story? Why or why not?",
+    hint: "Sample: The story doesn't say they change. They are still angry. The narrator says \"that's what happens to stubborn little goats\" — so maybe they will be stubborn again!"
+  },
+  {
+    tag: "plot", tagLabel: "📜 Plot",
+    q: "Why did Brown Goat cross to West Mountain, and why did Black Goat cross to East Mountain?",
+    hint: "Sample: Brown Goat went to West Mountain for the coldest water in the pond. Black Goat went to East Mountain for the juiciest grass. They each wanted something on the other mountain."
+  }
 ];
 
-// ─── GAME STATE ───
-let playerName   = '';
-let currentScore = 0;
-let scoreboard   = [];
-
-let vocabIdx = 0;
-let q1Idx    = 0;
-let q1Score  = 0;
-let q2Score  = 0;
-let q3Done   = false;
-let q4Done   = false;
-
-let matchSelected = { type: null, idx: null };
-let matchMatched  = [];
-
-let feedbackCallback = null;
-
-// ─── STORAGE ───
-async function loadScoreboard() {
-  try {
-    const r = await window.storage.get('home-game-scores');
-    return r ? JSON.parse(r.value) : [];
-  } catch { return []; }
-}
-async function saveScore(name, score) {
-  try {
-    const board = await loadScoreboard();
-    board.push({ name, score, medal: score >= 90 ? '🥇' : score >= 70 ? '🥈' : score >= 50 ? '🥉' : '🌟' });
-    board.sort((a, b) => b.score - a.score);
-    await window.storage.set('home-game-scores', JSON.stringify(board));
-    return board;
-  } catch { return []; }
-}
-
-// ─── SCREEN TRANSITIONS ───
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  const s = document.getElementById(id);
-  s.classList.add('active');
-}
-
-// ─── WELCOME → VOCAB ───
-function startGame() {
-  const n = document.getElementById('playerName').value.trim();
-  if (!n) { alert('Please type your name first! 請輸入你的名字！'); return; }
-  playerName   = n;
-  currentScore = 0;
-  q1Idx = q1Score = q2Score = 0;
-  q3Done = q4Done = false;
-  vocabIdx = 0;
-  matchMatched  = [];
-  matchSelected = { type: null, idx: null };
-  showVocab();
-  showScreen('screen-vocab');
-}
-
-// ─── VOCAB ───
-function showVocab() {
-  const v = vocab[vocabIdx];
-  const pct = Math.round((vocabIdx / vocab.length) * 100);
-  document.getElementById('vocab-progress').style.width = pct + '%';
-  document.getElementById('vocab-counter').textContent = `Word ${vocabIdx + 1} of ${vocab.length}`;
-  document.getElementById('vocab-score').textContent = currentScore;
-  document.getElementById('vocab-next-btn').textContent =
-    vocabIdx < vocab.length - 1 ? 'Next Word ➡️' : 'Start Quiz! 🎯';
-  document.getElementById('vocab-display').innerHTML = `
-    <div class="vocab-card">
-      <div class="vocab-word">${v.word}</div>
-      <span class="vocab-emoji">${v.emoji}</span>
-      <div>
-        <div class="zh-bubble"><span class="zh-text">${v.zh}</span></div>
-        <div class="pinyin">${v.pinyin}</div>
-      </div>
-      <div class="vocab-def">${v.def}</div>
-    </div>`;
-}
-function nextVocab() {
-  vocabIdx++;
-  if (vocabIdx < vocab.length) { showVocab(); }
-  else { initQ1(); showScreen('screen-quiz1'); }
-}
-
-// ─── QUIZ 1: Fill in Blank ───
-function initQ1() {
-  q1Idx = 0; q1Score = 0;
-  renderQ1();
-}
-function renderQ1() {
-  const q = fillBlankQ[q1Idx];
-  const pct = Math.round(((q1Idx) / fillBlankQ.length) * 100);
-  document.getElementById('q1-progress').style.width = pct + '%';
-  document.getElementById('q1-score').textContent = currentScore;
-
-  // shuffle choices
-  const choices = [...q.choices].sort(() => Math.random() - 0.5);
-
-  document.getElementById('q1-display').innerHTML = `
-    <p style="font-weight:800;color:#6B7280;font-size:0.9rem;margin-bottom:10px">
-      Question ${q1Idx + 1} of ${fillBlankQ.length}
-    </p>
-    <div class="question-text">
-      ${q.before} <span style="background:#FDE68A;padding:2px 10px;border-radius:8px;color:#92400E">${q.blank}</span> ${q.after}
-    </div>
-    <div class="question-hint">${q.hint}</div>
-    <div class="choices-grid" id="q1-choices">
-      ${choices.map((c, i) => `
-        <button class="choice-btn" id="qc-${i}" onclick="answerQ1(this,'${c.word}')">
-          ${c.emoji} ${c.word}
-          <span class="choice-zh">${c.zh}</span>
-        </button>`).join('')}
-    </div>`;
-}
-function answerQ1(btn, chosen) {
-  const q = fillBlankQ[q1Idx];
-  const correct = chosen === q.answer || chosen.replace(/s$/,'') === q.answer || q.answer === chosen.replace(/s$/,'');
-  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
-
-  if (correct) {
-    btn.classList.add('correct');
-    q1Score += 10; currentScore += 10;
-    confetti();
-    showFeedback(true, `${q.answer.toUpperCase()} — ${vocab.find(v=>v.word===q.answer||v.word===q.answer.replace(/s$/, ''))?.zh || ''}`, '+10 pts! 🎉', () => {
-      q1Idx++;
-      if (q1Idx < fillBlankQ.length) { renderQ1(); }
-      else { initQ2(); showScreen('screen-quiz2'); }
-    });
-  } else {
-    btn.classList.add('wrong');
-    showFeedback(false, `The answer is: ${q.answer}`, 'Keep going! 💪', () => {
-      q1Idx++;
-      if (q1Idx < fillBlankQ.length) { renderQ1(); }
-      else { initQ2(); showScreen('screen-quiz2'); }
-    });
+// GAME 4: Critical Thinking + Funny Questions
+const criticalQuestions = [
+  {
+    tag: "critical", tagLabel: "🧠 Critical Thinking",
+    q: "If the goats had said \"sorry\" and shared, how would the story end differently?",
+    hint: "They might both eat some grass, both cross the bridge safely, become friends, and stay dry and happy!"
+  },
+  {
+    tag: "critical", tagLabel: "🧠 Critical Thinking",
+    q: "Is being the oldest more important, or being the smartest? Why?",
+    hint: "Open answer — but really, neither makes you 'the best.' Being kind and helpful might matter more!"
+  },
+  {
+    tag: "funny", tagLabel: "😄 Funny",
+    q: "If the two goats had cell phones on the bridge, what messages do you think they would send each other?",
+    hint: "Maybe: \"Move back! 😡\" / \"No, YOU move! 😤\" / \"I'm calling Mom!\" / \"Bridge crash incoming 💦\""
+  },
+  {
+    tag: "critical", tagLabel: "🧠 Critical Thinking",
+    q: "Whose fault is it that they fell into the river — Brown Goat's or Black Goat's? Or both?",
+    hint: "Both! It takes two stubborn goats to make this problem. If only one stayed calm, no one would fall."
+  },
+  {
+    tag: "funny", tagLabel: "😄 Funny",
+    q: "What do you think the FISH in the river said when two wet goats fell on them?",
+    hint: "Maybe: \"What was THAT?!\" / \"It's raining goats today!\" / \"Hello, big visitors!\" / \"Please don't eat us — we're not grass!\""
+  },
+  {
+    tag: "critical", tagLabel: "🧠 Critical Thinking",
+    q: "The story says they were \"angry, tired, wet, cold, and hungry.\" Which feeling is the WORST? Why?",
+    hint: "Open answer. Maybe angry — because anger lasts even after you dry off and eat dinner!"
+  },
+  {
+    tag: "funny", tagLabel: "😄 Funny",
+    q: "If Brown Goat and Black Goat went to school, what would their teacher write on their report cards?",
+    hint: "Maybe: \"Doesn't share well with others.\" / \"Argues too much.\" / \"Needs to listen to friends!\" / \"Excellent pushing skills — not useful in class.\""
+  },
+  {
+    tag: "critical", tagLabel: "🧠 Critical Thinking",
+    q: "What's the difference between being CONFIDENT and being STUBBORN?",
+    hint: "Confident = believing in yourself but listening to others. Stubborn = refusing to change your mind even when you're wrong."
+  },
+  {
+    tag: "funny", tagLabel: "😄 Funny",
+    q: "What is the silliest thing the two goats could be stubborn about next? (Tomorrow's fight!)",
+    hint: "Fun answers: Who has nicer horns / Who sleeps on which side of the bed / Who gets to say \"baaa\" first in the morning / Who is more handsome!"
+  },
+  {
+    tag: "critical", tagLabel: "🧠 Critical Thinking",
+    q: "The narrator says \"that's what happens to stubborn little goats.\" Is the narrator on the goats' side? How do you know?",
+    hint: "No — the narrator is teaching us a lesson. The tone is like a parent saying \"see what happens when you don't listen!\""
+  },
+  {
+    tag: "funny", tagLabel: "😄 Funny",
+    q: "If you could give the two goats a NEW name based on what they did, what would you call them?",
+    hint: "Funny ideas: Mr. Push and Mr. Splash / The Bridge Brothers / Wet & Wetter / Mr. Oldest and Mr. Smartest / Stubborn 1 & Stubborn 2!"
+  },
+  {
+    tag: "critical", tagLabel: "🧠 Critical Thinking",
+    q: "Imagine you are Mama Goat. What would you say to your two sons when they come home wet and cold?",
+    hint: "Maybe: \"I told you so!\" / \"What did you learn today?\" / \"Both of you, go to your room!\" / \"Now do you understand why we must share?\""
   }
-}
+];
 
-// ─── QUIZ 2: Matching ───
-function initQ2() {
-  matchMatched = [];
-  matchSelected = { type: null, idx: null };
-  renderQ2();
-}
-function renderQ2() {
-  document.getElementById('q2-score').textContent = currentScore;
-  const shuffledDefs = [...matchPairs].sort(() => Math.random() - 0.5);
-
-  document.getElementById('q2-display').innerHTML = `
-    <p style="font-size:0.9rem;font-weight:800;color:#6B7280;margin-bottom:12px">
-      Tap a word 👈 then tap its meaning 👉
-    </p>
-    <div class="match-grid">
-      <div class="match-col" id="match-words">
-        ${matchPairs.map((p, i) => `
-          <button class="match-btn match-word" id="mw-${i}" onclick="selectMatch('word',${i})">
-            ${p.word}<br><small style="opacity:0.6">${p.wZh}</small>
-          </button>`).join('')}
-      </div>
-      <div class="match-col" id="match-defs">
-        ${shuffledDefs.map((p, i) => `
-          <button class="match-btn match-def" id="md-${i}" data-word="${p.word}" onclick="selectMatch('def',${i})">
-            ${p.def}<br><small style="opacity:0.6">${p.dZh}</small>
-          </button>`).join('')}
-      </div>
-    </div>
-    <div id="match-status" style="margin-top:12px;font-weight:800;font-size:0.95rem;color:#374151"></div>`;
-}
-function selectMatch(type, idx) {
-  const el = document.getElementById(type === 'word' ? `mw-${idx}` : `md-${idx}`);
-  if (el.classList.contains('used') || el.classList.contains('matched-ok')) return;
-
-  // deselect same type
-  document.querySelectorAll(type === 'word' ? '.match-word' : '.match-def')
-    .forEach(b => b.classList.remove('selected'));
-
-  el.classList.add('selected');
-  matchSelected[type] = idx;
-
-  // Check if both selected
-  if (matchSelected.word !== null && matchSelected.def !== null) {
-    const wordEl = document.getElementById(`mw-${matchSelected.word}`);
-    const defEl  = document.getElementById(`md-${matchSelected.def}`);
-    const wordName = matchPairs[matchSelected.word].word;
-    const defWord  = defEl.getAttribute('data-word');
-    const correct  = wordName === defWord;
-
-    if (correct) {
-      wordEl.classList.remove('selected'); wordEl.classList.add('matched-ok', 'used');
-      defEl.classList.remove('selected');  defEl.classList.add('matched-ok', 'used');
-      matchMatched.push(wordName);
-      q2Score += 10; currentScore += 10;
-      document.getElementById('q2-score').textContent = currentScore;
-      document.getElementById('match-status').textContent = `✅ Matched ${matchMatched.length} of ${matchPairs.length}!`;
-      confetti();
-      if (matchMatched.length === matchPairs.length) {
-        setTimeout(() => { showScreen('screen-quiz3'); }, 900);
-      }
-    } else {
-      wordEl.classList.add('matched-fail'); defEl.classList.add('matched-fail');
-      setTimeout(() => {
-        wordEl.classList.remove('selected','matched-fail');
-        defEl.classList.remove('selected','matched-fail');
-      }, 600);
-    }
-    matchSelected = { word: null, def: null };
+// GAME 5: Creative Questions
+const creativeQuestions = [
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Invent a NEW ending for the story. What if the goats had a clever idea instead of fighting?",
+    hint: "Maybe: One goat lies down so the other can walk over him. Or they take turns. Or they sing a song together until one moves!"
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Draw and describe a THIRD goat character. What is his name? What is his personality like?",
+    hint: "Example: \"White Goat — he is the youngest brother. He is friendly and always shares his grass. He tries to teach his brothers to be kind.\""
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Write a short SONG or rhyme that the goats sing while they push each other on the bridge.",
+    hint: "Example: \"Push, push, push so hard / Move back, brother, don't go far / I am best, no, I am best / Now we're falling — what a mess!\""
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Design a SAFETY SIGN to put on the narrow bridge. What does it say? What pictures are on it?",
+    hint: "Examples: \"ONE GOAT AT A TIME!\" / \"Be kind, share the bridge\" / \"Stubborn goats fall in!\" / pictures of two arrows showing turns."
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Re-tell the story from the BRIDGE's point of view. What does the bridge see, hear, and feel?",
+    hint: "Example: \"I am an old wooden bridge. Every day I feel little goat feet on me. Today TWO goats came at the same time! They pushed and pushed — I was so scared I would break! Then SPLASH! Quiet again.\""
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Imagine you wrote a sequel called \"Two Stubborn Little Goats — PART 2.\" What new problem do the goats face?",
+    hint: "Ideas: They both want the same hat. They both want to be the leader of the goat family. A new goat comes to the mountain and they both want to be his best friend."
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "If this story became a MOVIE, what title would you give it? Who would play the goats?",
+    hint: "Open answer. Encourage funny movie titles like \"The Big Bridge Battle\" or \"Splash! A Goat Story.\""
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Make up a new RULE for the goat family that would stop fights forever. Explain your rule.",
+    hint: "Examples: \"The first goat to say sorry gets extra grass.\" \"On Mondays, Brown Goat eats first. On Tuesdays, Black Goat eats first.\" \"No fighting on bridges!\""
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Write a short letter from Brown Goat to Black Goat the day AFTER they fell in the river.",
+    hint: "Example: \"Dear Black Goat, I am still cold and a bit angry. But I'm sorry too. Maybe tomorrow we can both eat grass. From, your stubborn brother, Brown Goat.\""
+  },
+  {
+    tag: "creative", tagLabel: "🎨 Creative",
+    q: "Turn this story into a SCIENCE LESSON. What can it teach us about forces?",
+    hint: "When two forces push with the same strength in opposite directions, the object doesn't move (this is called balanced forces). When the forces are different, something moves — like when both goats got tired and fell!"
   }
-}
+];
 
-// ─── QUIZ 3: My Address ───
-function submitAddress() {
-  const num    = document.getElementById('addr-number').value.trim();
-  const street = document.getElementById('addr-street').value.trim();
-  const city   = document.getElementById('addr-city').value.trim();
-  if (!num && !street && !city) {
-    document.getElementById('addr-city').focus();
-    return;
-  }
-  const preview = document.getElementById('q3-preview');
-  preview.style.display = 'block';
-  preview.innerHTML = `
-    <div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:16px;padding:16px;text-align:left;">
-      <p style="font-family:'Fredoka One',cursive;color:#166534;font-size:1.1rem;margin-bottom:8px">📍 My Address:</p>
-      <p style="font-size:1.1rem;font-weight:800;color:#1E3A5F">
-        ${[num, street, city].filter(Boolean).join(', ')}
-      </p>
-      <p style="font-size:0.85rem;color:#16A34A;margin-top:6px">地址 ✅</p>
-    </div>`;
-  q3Done = true;
-  setTimeout(() => { showScreen('screen-quiz4'); }, 1200);
-}
+/* ============================
+   STATE
+   ============================ */
+let state = {
+  mcIndex: 0,
+  mcAnswered: {},
+  mistakeIndex: 0,
+  mistakeFound: {},
+  qaIndex: 0,
+  criticalIndex: 0,
+  creativeIndex: 0,
+  totalStars: 0,
+  totalCorrect: 0,
+  brownScore: 0,
+  blackScore: 0
+};
 
-// ─── QUIZ 4: Where Do You Live? ───
-let whereChoice = null;
-function selectWhere(btn, type) {
-  document.querySelectorAll('.where-btn').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  whereChoice = type;
-  const city = document.getElementById('addr-city').value.trim() || 'my hometown';
-  const typeMap = { town: 'town 🏘️', city: 'city 🌆', country: 'countryside 🌾' };
-  document.getElementById('q4-place').textContent = city;
-  document.getElementById('q4-type').textContent = typeMap[type];
-  document.getElementById('q4-sentence').style.display = 'block';
-  document.getElementById('q4-submit').style.display = 'inline-block';
-}
-function submitWhere() {
-  if (!whereChoice) return;
-  q4Done = true;
-  currentScore += 10;
-  confetti();
-  showFeedback(true, 'Great! You know where you live! 🏡', '+10 pts!', () => {
-    finishGame();
+/* ============================
+   NAV
+   ============================ */
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('game-' + btn.dataset.game).classList.add('active');
   });
+});
+
+/* ============================
+   SCORE
+   ============================ */
+function updateScore() {
+  document.getElementById('totalStars').textContent = state.totalStars;
+  document.getElementById('totalCorrect').textContent = state.totalCorrect;
 }
 
-// ─── FINISH & RESULTS ───
-async function finishGame() {
-  const score = currentScore;
-  const stars = score >= 90 ? '⭐⭐⭐' : score >= 60 ? '⭐⭐' : '⭐';
-  const trophy = score >= 90 ? '🏆' : score >= 60 ? '🎖️' : '🌟';
-  const msgs = [
-    score >= 90 ? '超棒！ You are an ADDRESS EXPERT! 🎓' : '',
-    score >= 70 && score < 90 ? '很好！ Great job, keep it up! 👍' : '',
-    score >= 50 && score < 70 ? '不錯！ Good work! Practice makes perfect! 💪' : '',
-    score < 50 ? '加油！ Keep trying — you can do it! 🌈' : '',
-  ].find(m => m !== '') || 'Well done!';
-
-  document.getElementById('result-trophy').textContent    = trophy;
-  document.getElementById('result-name-title').textContent = `${playerName}, you got...`;
-  document.getElementById('result-score-num').textContent  = score;
-  document.getElementById('result-stars').textContent      = stars;
-  document.getElementById('result-msg').textContent        = msgs;
-  document.getElementById('q4-score').textContent          = currentScore;
-
-  scoreboard = await saveScore(playerName, score);
-  showScreen('screen-results');
-  confetti(); confetti();
-}
-
-// ─── SCOREBOARD ───
-async function goToScoreboard() {
-  const board = await loadScoreboard();
-  renderScoreboard(board);
-  showScreen('screen-scoreboard');
-}
-function renderScoreboard(board) {
-  const medals = ['🥇','🥈','🥉'];
-  if (!board || board.length === 0) {
-    document.getElementById('scoreboard-table-wrap').innerHTML =
-      '<p class="no-scores">No scores yet! Be the first to play! 🌟</p>';
-    return;
-  }
-  document.getElementById('scoreboard-table-wrap').innerHTML = `
-    <table class="scoreboard-table">
-      <thead><tr><th>#</th><th>🏆 Name / 名字</th><th>⭐ Score</th></tr></thead>
-      <tbody>
-        ${board.map((p, i) => `
-          <tr class="${i < 3 ? 'rank-'+(i+1) : ''}">
-            <td><span class="rank-medal">${medals[i] || (i+1)}</span></td>
-            <td>${p.name}</td>
-            <td style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:#2563EB">${p.score}</td>
-          </tr>`).join('')}
-      </tbody>
-    </table>`;
-}
-async function clearScoreboard() {
-  if (!confirm('Clear all scores? 清除所有分數？')) return;
-  try { await window.storage.delete('home-game-scores'); } catch {}
-  renderScoreboard([]);
-}
-function newPlayer() {
-  document.getElementById('playerName').value = '';
-  showScreen('screen-welcome');
-}
-
-// ─── FEEDBACK POPUP ───
-function showFeedback(correct, msg, pts, cb) {
-  feedbackCallback = cb;
-  document.getElementById('fb-emoji').textContent = correct ? '🎉' : '💪';
-  document.getElementById('fb-title').textContent = correct ? 'Correct! ✅' : 'Not quite!';
-  document.getElementById('fb-title').style.color = correct ? '#16A34A' : '#DC2626';
-  document.getElementById('fb-msg').textContent   = msg;
-  document.getElementById('fb-pts').textContent   = pts;
-  document.getElementById('fb-pts').style.color   = correct ? '#16A34A' : '#6B7280';
-  document.getElementById('feedback-overlay').style.display = 'flex';
-}
-function closeFeedback() {
-  document.getElementById('feedback-overlay').style.display = 'none';
-  if (feedbackCallback) { feedbackCallback(); feedbackCallback = null; }
-}
-
-// ─── CONFETTI ───
-function confetti() {
-  const colors = ['#FFD93D','#FF6B6B','#6BCB77','#5BC8F5','#A78BFA','#FFA94D'];
-  for (let i = 0; i < 24; i++) {
-    const el = document.createElement('div');
-    el.className = 'confetti-piece';
-    el.style.cssText = `
-      left: ${Math.random()*100}vw;
-      top: -20px;
-      background: ${colors[Math.floor(Math.random()*colors.length)]};
-      animation-delay: ${Math.random()*0.6}s;
-      animation-duration: ${0.9 + Math.random()*0.6}s;
-      transform: rotate(${Math.random()*360}deg);
-      border-radius: ${Math.random()>0.5?'50%':'2px'};
-    `;
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 1800);
+function changeTeamScore(team, delta) {
+  if (team === 'brown') {
+    state.brownScore = Math.max(0, state.brownScore + delta);
+    document.getElementById('brownScore').textContent = state.brownScore;
+  } else {
+    state.blackScore = Math.max(0, state.blackScore + delta);
+    document.getElementById('blackScore').textContent = state.blackScore;
   }
 }
+
+/* ============================
+   GAME 1: MULTIPLE CHOICE
+   ============================ */
+function renderMC() {
+  const i = state.mcIndex;
+  const q = mcQuestions[i];
+  const answered = state.mcAnswered[i];
+  document.getElementById('mcProgress').textContent = `${i+1} / ${mcQuestions.length}`;
+
+  const letters = ['A','B','C','D'];
+  let optsHTML = '';
+  q.options.forEach((opt, idx) => {
+    let cls = 'option-btn';
+    if (answered !== undefined) {
+      cls += ' disabled';
+      if (idx === q.correct) cls += ' correct';
+      else if (idx === answered && answered !== q.correct) cls += ' wrong';
+    }
+    optsHTML += `<button class="${cls}" data-idx="${idx}">
+      <span class="opt-letter">${letters[idx]}</span>
+      <span>${opt}</span>
+    </button>`;
+  });
+
+  let feedbackHTML = '';
+  if (answered !== undefined) {
+    const correctLetter = letters[q.correct];
+    const correctText = q.options[q.correct];
+    if (answered === q.correct) {
+      feedbackHTML = `<div class="feedback success show">🌟 Excellent! That's correct! <br><strong>Answer: ${correctLetter}. ${correctText}</strong></div>`;
+    } else {
+      feedbackHTML = `<div class="feedback error show">🐐 Not quite. <br><strong>Correct answer: ${correctLetter}. ${correctText}</strong></div>`;
+    }
+  }
+
+  document.getElementById('mcContainer').innerHTML = `
+    <div class="question-card">
+      <div class="q-number">${i+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-grid">${optsHTML}</div>
+      ${feedbackHTML}
+    </div>
+  `;
+
+  document.querySelectorAll('#mcContainer .option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (state.mcAnswered[i] !== undefined) return;
+      const chosen = parseInt(btn.dataset.idx);
+      state.mcAnswered[i] = chosen;
+      if (chosen === q.correct) {
+        state.totalStars++;
+        state.totalCorrect++;
+        updateScore();
+      }
+      renderMC();
+    });
+  });
+
+  document.getElementById('mcPrev').disabled = i === 0;
+  document.getElementById('mcNext').textContent = i === mcQuestions.length - 1 ? 'Finish ✓' : 'Next ▶';
+
+  // check completion
+  if (Object.keys(state.mcAnswered).length === mcQuestions.length) {
+    const correct = Object.entries(state.mcAnswered).filter(([k,v]) => v === mcQuestions[k].correct).length;
+    document.getElementById('mcFinalScore').textContent = `You got ${correct} out of ${mcQuestions.length} questions correct!`;
+    if (i === mcQuestions.length - 1) {
+      document.getElementById('mcComplete').classList.add('show');
+    } else {
+      document.getElementById('mcComplete').classList.remove('show');
+    }
+  } else {
+    document.getElementById('mcComplete').classList.remove('show');
+  }
+}
+
+document.getElementById('mcPrev').addEventListener('click', () => {
+  if (state.mcIndex > 0) { state.mcIndex--; renderMC(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+document.getElementById('mcNext').addEventListener('click', () => {
+  if (state.mcIndex < mcQuestions.length - 1) { state.mcIndex++; renderMC(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+
+/* ============================
+   GAME 2: FIND THE MISTAKE
+   ============================ */
+function renderMistake() {
+  const i = state.mistakeIndex;
+  const q = mistakeQuestions[i];
+  const found = state.mistakeFound[i];
+  document.getElementById('mistakeProgress').textContent = `${i+1} / ${mistakeQuestions.length}`;
+
+  let sentHTML = '';
+  q.words.forEach((w, idx) => {
+    const isWrong = w.wrong !== undefined;
+    let cls = 'mistake-word';
+    if (found !== undefined) {
+      if (isWrong) cls += ' found';
+      else if (found === idx) cls += ' miss';
+    }
+    sentHTML += `<span class="${cls}" data-idx="${idx}" data-wrong="${isWrong}">${w.text}</span> `;
+  });
+
+  let correctionHTML = '';
+  if (found !== undefined) {
+    const wrongIdx = q.words.findIndex(w => w.wrong);
+    const wrongWord = q.words[wrongIdx];
+    correctionHTML = `<div class="correction-area show">
+      <h4>✏️ Now say the correct sentence aloud!</h4>
+      <p>The word <strong style="color:var(--red);text-decoration:line-through">"${wrongWord.text}"</strong> should be <strong style="color:var(--green-check)">"${wrongWord.wrong}"</strong></p>
+      <p class="correction-text">👉 "${q.correct}"</p>
+    </div>`;
+  }
+
+  document.getElementById('mistakeContainer').innerHTML = `
+    <div class="question-card">
+      <div class="q-number">${i+1}</div>
+      <div class="q-text">🔍 Click the WRONG word in this sentence:</div>
+      <div class="mistake-sentence">${sentHTML}</div>
+      ${correctionHTML}
+    </div>
+  `;
+
+  document.querySelectorAll('#mistakeContainer .mistake-word').forEach(span => {
+    span.addEventListener('click', () => {
+      if (state.mistakeFound[i] !== undefined) return;
+      const idx = parseInt(span.dataset.idx);
+      const isWrong = span.dataset.wrong === 'true';
+      state.mistakeFound[i] = idx;
+      if (isWrong) {
+        state.totalStars++;
+        state.totalCorrect++;
+        updateScore();
+      }
+      renderMistake();
+    });
+  });
+
+  document.getElementById('mistakePrev').disabled = i === 0;
+  document.getElementById('mistakeNext').textContent = i === mistakeQuestions.length - 1 ? 'Finish ✓' : 'Next ▶';
+}
+
+document.getElementById('mistakePrev').addEventListener('click', () => {
+  if (state.mistakeIndex > 0) { state.mistakeIndex--; renderMistake(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+document.getElementById('mistakeNext').addEventListener('click', () => {
+  if (state.mistakeIndex < mistakeQuestions.length - 1) { state.mistakeIndex++; renderMistake(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+
+/* ============================
+   GAME 3 / 4 / 5: OPEN-ENDED CARDS
+   ============================ */
+function renderOpenQ(panelKey, data, indexKey, progressId, containerId, prevId, nextId) {
+  const i = state[indexKey];
+  const q = data[i];
+  document.getElementById(progressId).textContent = `${i+1} / ${data.length}`;
+
+  document.getElementById(containerId).innerHTML = `
+    <div class="think-card">
+      <div class="q-number">${i+1}</div>
+      <span class="think-tag ${q.tag}">${q.tagLabel}</span>
+      <div class="think-question">${q.q}</div>
+      <div class="answer-key">
+        <div class="answer-key-label">📝 Answer Key (for teacher)</div>
+        <div class="answer-key-text">${q.hint}</div>
+      </div>
+      <button class="reveal-btn" onclick="toggleAnswerKey(this)">🙈 Hide answer key</button>
+    </div>
+  `;
+
+  document.getElementById(prevId).disabled = i === 0;
+  document.getElementById(nextId).textContent = i === data.length - 1 ? 'Finish ✓' : 'Next ▶';
+}
+
+function toggleAnswerKey(btn) {
+  const card = btn.parentElement;
+  const key = card.querySelector('.answer-key');
+  const hidden = key.classList.toggle('hidden');
+  btn.textContent = hidden ? '👀 Show answer key' : '🙈 Hide answer key';
+}
+
+// QA Game
+function renderQA() {
+  renderOpenQ('qa', qaQuestions, 'qaIndex', 'qaProgress', 'qaContainer', 'qaPrev', 'qaNext');
+}
+document.getElementById('qaPrev').addEventListener('click', () => {
+  if (state.qaIndex > 0) { state.qaIndex--; renderQA(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+document.getElementById('qaNext').addEventListener('click', () => {
+  if (state.qaIndex < qaQuestions.length - 1) { state.qaIndex++; renderQA(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+
+// Critical Game
+function renderCritical() {
+  renderOpenQ('critical', criticalQuestions, 'criticalIndex', 'criticalProgress', 'criticalContainer', 'criticalPrev', 'criticalNext');
+}
+document.getElementById('criticalPrev').addEventListener('click', () => {
+  if (state.criticalIndex > 0) { state.criticalIndex--; renderCritical(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+document.getElementById('criticalNext').addEventListener('click', () => {
+  if (state.criticalIndex < criticalQuestions.length - 1) { state.criticalIndex++; renderCritical(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+
+// Creative Game
+function renderCreative() {
+  renderOpenQ('creative', creativeQuestions, 'creativeIndex', 'creativeProgress', 'creativeContainer', 'creativePrev', 'creativeNext');
+}
+document.getElementById('creativePrev').addEventListener('click', () => {
+  if (state.creativeIndex > 0) { state.creativeIndex--; renderCreative(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+document.getElementById('creativeNext').addEventListener('click', () => {
+  if (state.creativeIndex < creativeQuestions.length - 1) { state.creativeIndex++; renderCreative(); window.scrollTo({top:0, behavior:'smooth'}); }
+});
+
+/* INIT */
+renderMC();
+renderMistake();
+renderQA();
+renderCritical();
+renderCreative();
+updateScore();
 </script>
+
 </body>
 </html>
