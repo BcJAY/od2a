@@ -3,1026 +3,1002 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grammar &amp; Essay Mastery Quiz — Grade 11</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Where's Your Home? 🏠</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --paper: #f4ecdc;
-    --paper-deep: #ebe1cd;
-    --ink: #1a1612;
-    --ink-soft: #4a3f33;
-    --accent: #8b2820;
-    --accent-soft: #b85a4f;
-    --gold: #a08040;
-    --success: #2d5a3d;
-    --error: #8b2820;
-    --rule: #c9b896;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--paper);
-    color: var(--ink);
-    min-height: 100vh;
-    padding: 24px 16px;
-    background-image:
-      radial-gradient(circle at 20% 30%, rgba(160, 128, 64, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 70%, rgba(139, 40, 32, 0.04) 0%, transparent 50%);
-  }
-
-  .container {
-    max-width: 760px;
-    margin: 0 auto;
-  }
-
-  .masthead {
-    border-top: 3px double var(--ink);
-    border-bottom: 1px solid var(--ink);
-    padding: 18px 0 14px;
-    margin-bottom: 32px;
-    text-align: center;
-  }
-
-  .masthead-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 8px;
-  }
-
-  .masthead-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(34px, 6vw, 52px);
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: -0.5px;
-  }
-
-  .masthead-sub {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 17px;
-    color: var(--ink-soft);
-    margin-top: 6px;
-  }
-
-  .card {
-    background: var(--paper-deep);
-    border: 1px solid var(--rule);
-    padding: clamp(24px, 4vw, 44px);
-    box-shadow: 0 1px 0 rgba(26, 22, 18, 0.04), 0 8px 24px -12px rgba(26, 22, 18, 0.15);
-  }
-
-  /* WELCOME */
-  .welcome h2 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 14px;
-  }
-
-  .welcome p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--ink-soft);
-    margin-bottom: 22px;
-  }
-
-  .topics-list {
-    border-left: 2px solid var(--accent);
-    padding: 6px 0 6px 18px;
-    margin-bottom: 28px;
-  }
-
-  .topics-list li {
-    list-style: none;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    line-height: 1.8;
-    color: var(--ink);
-  }
-
-  .topics-list li::before {
-    content: "— ";
-    color: var(--accent);
-  }
-
-  label {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 8px;
-  }
-
-  input[type="text"] {
-    width: 100%;
-    padding: 14px 16px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    background: var(--paper);
-    border: 1px solid var(--rule);
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  input[type="text"]:focus {
-    border-color: var(--accent);
-  }
-
-  .btn {
-    display: inline-block;
-    padding: 14px 32px;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    margin-top: 20px;
-  }
-
-  .btn:hover:not(:disabled) { background: var(--accent); }
-  .btn:active:not(:disabled) { transform: translateY(1px); }
-  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--ink);
-    border: 1px solid var(--ink);
-  }
-
-  .btn-secondary:hover:not(:disabled) {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  /* QUIZ */
-  .quiz-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 22px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .quiz-meta .student-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 18px;
-  }
-
-  .quiz-meta .counter {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-
-  .progress-track {
-    height: 3px;
-    background: var(--paper);
-    margin-bottom: 32px;
-    position: relative;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    width: 0;
-    transition: width 0.4s ease;
-  }
-
-  .category-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 14px;
-  }
-
-  .question-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(22px, 3.2vw, 26px);
-    font-weight: 500;
-    line-height: 1.4;
-    margin-bottom: 28px;
-    color: var(--ink);
-  }
-
-  .question-text em {
-    background: rgba(160, 128, 64, 0.15);
-    padding: 0 4px;
-    font-style: italic;
-  }
-
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .option {
-    padding: 16px 20px;
-    background: var(--paper);
-    border: 1px solid var(--rule);
-    cursor: pointer;
-    transition: all 0.18s;
-    font-size: 15px;
-    line-height: 1.5;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-
-  .option:hover:not(.disabled) {
-    border-color: var(--ink);
-    transform: translateX(2px);
-  }
-
-  .option-letter {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--accent);
-    min-width: 20px;
-  }
-
-  .option.selected {
-    border-color: var(--ink);
-    background: var(--paper-deep);
-  }
-
-  .option.correct {
-    border-color: var(--success);
-    background: rgba(45, 90, 61, 0.08);
-  }
-
-  .option.correct .option-letter { color: var(--success); }
-
-  .option.incorrect {
-    border-color: var(--error);
-    background: rgba(139, 40, 32, 0.08);
-  }
-
-  .option.disabled { cursor: default; }
-
-  .feedback {
-    margin-top: 20px;
-    padding: 16px 20px;
-    border-left: 3px solid var(--accent);
-    background: var(--paper);
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    display: none;
-  }
-
-  .feedback.show { display: block; }
-
-  .feedback strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  .quiz-actions {
-    margin-top: 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-
-  /* RESULTS */
-  .results-header {
-    text-align: center;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--rule);
-    margin-bottom: 28px;
-  }
-
-  .score-display {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 96px;
-    font-weight: 600;
-    line-height: 1;
-    color: var(--accent);
-  }
-
-  .score-display .total {
-    font-size: 40px;
-    color: var(--ink-soft);
-  }
-
-  .score-percent {
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-top: 4px;
-  }
-
-  .verdict {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 22px;
-    margin-top: 14px;
-    color: var(--ink);
-  }
-
-  .breakdown-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 14px;
-  }
-
-  .breakdown-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px dotted var(--rule);
-    font-size: 14px;
-  }
-
-  .breakdown-row:last-child { border-bottom: none; }
-
-  .breakdown-row .topic { color: var(--ink); }
-
-  .breakdown-row .score-cell {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    color: var(--accent);
-  }
-
-  /* SCOREBOARD */
-  .scoreboard-section {
-    margin-top: 36px;
-    padding-top: 28px;
-    border-top: 3px double var(--ink);
-  }
-
-  .scoreboard-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 6px;
-  }
-
-  .scoreboard-sub {
-    text-align: center;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 22px;
-  }
-
-  .scoreboard-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-
-  .scoreboard-table th {
-    text-align: left;
-    padding: 10px 8px;
-    border-bottom: 2px solid var(--ink);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    font-weight: 600;
-  }
-
-  .scoreboard-table th:last-child,
-  .scoreboard-table td:last-child {
-    text-align: right;
-  }
-
-  .scoreboard-table td {
-    padding: 12px 8px;
-    border-bottom: 1px dotted var(--rule);
-  }
-
-  .scoreboard-table .rank {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--accent);
-    width: 40px;
-  }
-
-  .scoreboard-table .name-cell {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-  }
-
-  .scoreboard-table .you-row {
-    background: rgba(160, 128, 64, 0.1);
-  }
-
-  .scoreboard-table .you-row .name-cell::after {
-    content: " — you";
-    font-style: italic;
-    color: var(--accent);
-    font-size: 13px;
-  }
-
-  .empty-board {
-    text-align: center;
-    padding: 24px;
-    color: var(--ink-soft);
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-  }
-
-  .results-actions {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 32px;
-    flex-wrap: wrap;
-  }
-
-  .privacy-note {
-    text-align: center;
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-top: 14px;
-    font-style: italic;
-  }
-
-  .hidden { display: none; }
-
-  @media (max-width: 520px) {
-    .quiz-meta { flex-direction: column; align-items: flex-start; gap: 4px; }
-    .quiz-actions { flex-direction: column-reverse; }
-    .quiz-actions .btn { width: 100%; }
-    .score-display { font-size: 72px; }
-  }
+:root {
+  --sky: #5BC8F5;
+  --sky-light: #E8F7FF;
+  --sun: #FFD93D;
+  --grass: #6BCB77;
+  --coral: #FF6B6B;
+  --purple: #A78BFA;
+  --white: #FFFFFF;
+  --card-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  --correct: #6BCB77;
+  --wrong: #FF6B6B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(180deg, #87CEEB 0%, #C9EEFF 55%, #A8E6A3 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+}
+/* Floating clouds */
+.cloud {
+  position: fixed;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 0;
+}
+.cloud::before, .cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+.cloud-1 { width: 140px; height: 55px; top: 8%; left: 5%; animation: drift1 35s linear infinite; }
+.cloud-1::before { width: 75px; height: 75px; top: -35px; left: 15px; }
+.cloud-1::after  { width: 55px; height: 55px; top: -20px; left: 60px; }
+.cloud-2 { width: 100px; height: 40px; top: 15%; right: 8%; animation: drift2 45s linear infinite; }
+.cloud-2::before { width: 55px; height: 55px; top: -28px; left: 10px; }
+.cloud-2::after  { width: 40px; height: 40px; top: -18px; left: 45px; }
+.cloud-3 { width: 120px; height: 45px; top: 3%; left: 55%; animation: drift1 55s linear infinite reverse; }
+.cloud-3::before { width: 60px; height: 60px; top: -30px; left: 12px; }
+.cloud-3::after  { width: 45px; height: 45px; top: -20px; left: 55px; }
+@keyframes drift1 { 0%{transform:translateX(-200px)} 100%{transform:translateX(120vw)} }
+@keyframes drift2 { 0%{transform:translateX(200px)} 100%{transform:translateX(-120vw)} }
+
+/* Game container */
+#app {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 640px;
+  padding: 16px;
+}
+.screen { display: none; animation: slideIn 0.4s ease; }
+.screen.active { display: block; }
+@keyframes slideIn { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)} }
+
+/* Game card */
+.card {
+  background: white;
+  border-radius: 32px;
+  padding: 36px 32px;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  border: 4px solid var(--sky);
+}
+.card-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
+  color: #2563EB;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.card-sub {
+  font-size: 1rem;
+  color: #64748B;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.emoji-hero { font-size: 4rem; margin-bottom: 14px; display: block; }
+
+/* Progress bar */
+.progress-wrap { background: #E5E7EB; border-radius: 20px; height: 14px; margin-bottom: 24px; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, #6BCB77, #5BC8F5); border-radius: 20px; transition: width 0.5s ease; }
+
+/* Score chip */
+.score-chip {
+  display: inline-block;
+  background: var(--sun);
+  color: #92400E;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  padding: 6px 18px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  padding: 14px 36px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 5px 0 rgba(0,0,0,0.2);
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
+.btn-primary { background: #2563EB; color: white; }
+.btn-primary:hover { background: #1D4ED8; }
+.btn-green  { background: #16A34A; color: white; }
+.btn-coral  { background: #EF4444; color: white; }
+
+/* Name input */
+.name-input {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1.3rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  border: 3px solid #93C5FD;
+  border-radius: 20px;
+  outline: none;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1E3A5F;
+}
+.name-input:focus { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
+
+/* Vocab card */
+.vocab-card {
+  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
+  border: 3px solid #93C5FD;
+  border-radius: 24px;
+  padding: 28px 24px;
+  margin: 0 auto 20px;
+  max-width: 420px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.vocab-card:hover { transform: scale(1.02); }
+.vocab-word {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #1D4ED8;
+  text-transform: capitalize;
+}
+.vocab-emoji { font-size: 3.5rem; margin: 8px 0; display: block; }
+.zh-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--sun);
+  color: #7C2D12;
+  padding: 8px 18px;
+  border-radius: 50px;
+  margin: 10px auto;
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+.zh-text { font-size: 1.4rem; }
+.pinyin { font-size: 0.85rem; color: #92400E; margin-top: 2px; }
+.vocab-def {
+  font-size: 1rem;
+  color: #374151;
+  font-weight: 700;
+  margin-top: 12px;
+  background: #F0FDF4;
+  border-radius: 12px;
+  padding: 10px;
+}
+.vocab-counter {
+  font-size: 0.9rem;
+  color: #6B7280;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Quiz */
+.question-text {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1E293B;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.question-hint {
+  background: #FEF9C3;
+  border: 2px dashed #FDE047;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 0.95rem;
+  color: #713F12;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+.choices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+.choice-btn {
+  padding: 14px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  border: 3px solid #93C5FD;
+  border-radius: 16px;
+  cursor: pointer;
+  background: #EFF6FF;
+  color: #1E3A5F;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.choice-btn:hover:not(:disabled) { background: #DBEAFE; border-color: #2563EB; transform: scale(1.03); }
+.choice-btn.correct  { background: #DCFCE7; border-color: #16A34A; color: #166534; animation: pulse 0.4s; }
+.choice-btn.wrong    { background: #FEE2E2; border-color: #DC2626; color: #991B1B; animation: shake 0.4s; }
+.choice-btn:disabled { cursor: default; }
+.choice-zh { font-size: 1rem; color: #6B7280; }
+@keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+/* Matching quiz */
+.match-grid {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  justify-content: center;
+}
+.match-col { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.match-btn {
+  padding: 12px 8px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border-radius: 14px;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.match-word { background: #EDE9FE; color: #4C1D95; border-color: #C4B5FD; }
+.match-word:hover:not(:disabled):not(.used) { background: #DDD6FE; border-color: #7C3AED; }
+.match-word.selected { background: #7C3AED; color: white; border-color: #5B21B6; }
+.match-def { background: #FEF3C7; color: #78350F; border-color: #FDE68A; font-size: 0.88rem; }
+.match-def:hover:not(:disabled):not(.used) { background: #FDE68A; border-color: #D97706; }
+.match-def.selected { background: #D97706; color: white; border-color: #92400E; }
+.match-btn.matched-ok { background: #DCFCE7; border-color: #16A34A; color: #166534; cursor: default; animation: pulse 0.4s; }
+.match-btn.matched-fail { animation: shake 0.4s; }
+.match-btn.used { opacity: 0.45; cursor: default; }
+
+/* Address form */
+.address-field {
+  margin-bottom: 16px;
+  text-align: left;
+}
+.address-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+  font-size: 1rem;
+  color: #1E3A5F;
+  margin-bottom: 6px;
+}
+.address-zh { font-size: 0.9rem; color: #6B7280; font-weight: 700; }
+.address-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1.1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  border: 3px solid #93C5FD;
+  border-radius: 14px;
+  outline: none;
+  color: #1E3A5F;
+}
+.address-input:focus { border-color: #2563EB; }
+
+/* Where do you live */
+.where-choices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 20px 0;
+}
+.where-btn {
+  padding: 20px 10px;
+  border-radius: 20px;
+  border: 4px solid transparent;
+  cursor: pointer;
+  background: #F1F5F9;
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+}
+.where-btn:hover { transform: scale(1.05); }
+.where-btn.selected { border-color: #2563EB; background: #DBEAFE; }
+.where-emoji { font-size: 2.2rem; display: block; margin-bottom: 6px; }
+.where-eng { font-size: 0.95rem; color: #1E293B; }
+.where-zh  { font-size: 0.85rem; color: #64748B; }
+
+/* Feedback popup */
+.feedback-overlay {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.35);
+  animation: fadeIn 0.2s;
+}
+.feedback-box {
+  background: white;
+  border-radius: 28px;
+  padding: 36px 40px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  max-width: 340px;
+  animation: popIn 0.3s;
+}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes popIn { from{transform:scale(0.7)} to{transform:scale(1)} }
+.feedback-emoji { font-size: 4rem; display: block; margin-bottom: 10px; }
+.feedback-title { font-family: 'Fredoka One', cursive; font-size: 2rem; margin-bottom: 6px; }
+.feedback-msg { font-size: 1rem; font-weight: 700; color: #374151; margin-bottom: 20px; }
+.feedback-pts { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #16A34A; }
+
+/* Results */
+.result-score {
+  font-family: 'Fredoka One', cursive;
+  font-size: 4rem;
+  color: #2563EB;
+  line-height: 1;
+}
+.result-label { font-size: 1rem; color: #64748B; font-weight: 700; margin-bottom: 16px; }
+.stars { font-size: 2.5rem; letter-spacing: 4px; margin-bottom: 20px; display: block; }
+.result-msg { font-size: 1.1rem; font-weight: 800; color: #374151; margin-bottom: 24px; background: #F0FDF4; border-radius: 16px; padding: 14px; }
+
+/* Scoreboard */
+.scoreboard-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+.scoreboard-table th {
+  background: #2563EB; color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.05rem; padding: 10px 12px;
+}
+.scoreboard-table th:first-child { border-radius: 12px 0 0 0; }
+.scoreboard-table th:last-child  { border-radius: 0 12px 0 0; }
+.scoreboard-table td { padding: 10px 12px; font-weight: 700; font-size: 1rem; border-bottom: 2px solid #E5E7EB; }
+.scoreboard-table tr:nth-child(even) td { background: #F8FAFC; }
+.rank-1 td { background: #FFFBEB !important; color: #78350F; }
+.rank-2 td { background: #F1F5F9 !important; }
+.rank-3 td { background: #FFF7ED !important; }
+.rank-medal { font-size: 1.3rem; }
+.no-scores { color: #9CA3AF; font-weight: 700; padding: 30px; font-size: 1.1rem; }
+.btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+
+/* Confetti */
+.confetti-piece {
+  position: fixed;
+  width: 12px; height: 12px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 100;
+  animation: confettiFall 1.2s ease-in forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Divider */
+.divider { height: 3px; background: linear-gradient(90deg,#93C5FD,#A5F3FC,#93C5FD); border-radius: 4px; margin: 20px 0; }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <header class="masthead">
-    <div class="masthead-label">Grade Eleven · English Language Arts</div>
-    <h1 class="masthead-title">Grammar &amp; Essay Mastery</h1>
-    <div class="masthead-sub">A test of clauses, hooks, and the opinion essay</div>
-  </header>
+<!-- Floating clouds -->
+<div class="cloud cloud-1"></div>
+<div class="cloud cloud-2"></div>
+<div class="cloud cloud-3"></div>
 
-  <!-- WELCOME SCREEN -->
-  <section id="welcome" class="card welcome">
-    <h2>Welcome, writer.</h2>
-    <p>This twenty-question assessment checks your understanding of clause types and the structure of an opinion essay. Read each question carefully — there is exactly one correct answer.</p>
-    <ul class="topics-list">
-      <li>Adjective, adverb, and noun clauses</li>
-      <li>Sentence hooks</li>
-      <li>Opinion essay: introduction, hook, arguments, counter argument, conclusion</li>
-    </ul>
-    <label for="nameInput">Your English Name</label>
-    <input type="text" id="nameInput" placeholder="Type your name" maxlength="24" autocomplete="off">
-    <div>
-      <button class="btn" id="startBtn" disabled>Begin the Quiz</button>
+<div id="app">
+
+  <!-- ═══════════════ WELCOME SCREEN ═══════════════ -->
+  <div id="screen-welcome" class="screen active">
+    <div class="card">
+      <span class="emoji-hero">🏠</span>
+      <div class="card-title">Where's Your Home?</div>
+      <div class="card-sub">你住在哪裡？ — A Learning Adventure!</div>
+      <div class="divider"></div>
+      <p style="font-weight:800;color:#374151;margin-bottom:14px;font-size:1.05rem">
+        👋 What is your name? 你叫什麼名字？
+      </p>
+      <input class="name-input" id="playerName" type="text" placeholder="Type your name here! ✏️" maxlength="30">
+      <br>
+      <button class="btn btn-primary" onclick="startGame()">Let's Go! 🚀</button>
+      <p style="margin-top:16px;font-size:0.88rem;color:#9CA3AF;font-weight:700">
+        🏆 Earn up to 100 points!
+      </p>
     </div>
-  </section>
+  </div>
 
-  <!-- QUIZ SCREEN -->
-  <section id="quiz" class="card hidden">
-    <div class="quiz-meta">
-      <span class="student-name" id="quizName"></span>
-      <span class="counter" id="quizCounter">Question 1 of 20</span>
+  <!-- ═══════════════ VOCAB SCREEN ═══════════════ -->
+  <div id="screen-vocab" class="screen">
+    <div class="card">
+      <div class="score-chip">⭐ <span id="vocab-score">0</span> pts</div>
+      <div class="card-title">📚 Word Time!</div>
+      <div class="card-sub">學單詞 — Learn the words!</div>
+      <div class="progress-wrap"><div class="progress-bar" id="vocab-progress" style="width:0%"></div></div>
+      <div class="vocab-counter" id="vocab-counter">Word 1 of 8</div>
+      <div id="vocab-display"></div>
+      <button class="btn btn-primary" id="vocab-next-btn" onclick="nextVocab()" style="margin-top:10px">
+        Next Word ➡️
+      </button>
     </div>
-    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
 
-    <div class="category-tag" id="categoryTag"></div>
-    <div class="question-text" id="questionText"></div>
-    <div class="options" id="optionsContainer"></div>
-    <div class="feedback" id="feedback"></div>
-
-    <div class="quiz-actions">
-      <span class="counter" id="runningScore">Score: 0</span>
-      <button class="btn" id="nextBtn" disabled>Next</button>
+  <!-- ═══════════════ QUIZ 1: Fill in Blank ═══════════════ -->
+  <div id="screen-quiz1" class="screen">
+    <div class="card">
+      <div class="score-chip">⭐ <span id="q1-score">0</span> pts</div>
+      <div class="card-title">✏️ Fill in the Blank!</div>
+      <div class="card-sub">填空題 — Pick the right word!</div>
+      <div class="progress-wrap"><div class="progress-bar" id="q1-progress" style="width:0%"></div></div>
+      <div id="q1-display"></div>
     </div>
-  </section>
+  </div>
 
-  <!-- RESULTS SCREEN -->
-  <section id="results" class="card hidden">
-    <div class="results-header">
-      <div class="score-display"><span id="finalScore">0</span><span class="total">/20</span></div>
-      <div class="score-percent" id="scorePercent">0 percent</div>
-      <div class="verdict" id="verdict"></div>
+  <!-- ═══════════════ QUIZ 2: Matching ═══════════════ -->
+  <div id="screen-quiz2" class="screen">
+    <div class="card">
+      <div class="score-chip">⭐ <span id="q2-score">0</span> pts</div>
+      <div class="card-title">🔗 Match It!</div>
+      <div class="card-sub">配對 — Tap word, then tap meaning!</div>
+      <div class="progress-wrap"><div class="progress-bar" id="q2-progress" style="width:100%"></div></div>
+      <div id="q2-display"></div>
     </div>
+  </div>
 
-    <h3 class="breakdown-title">Topic Breakdown</h3>
-    <div id="breakdownList"></div>
-
-    <div class="scoreboard-section">
-      <h2 class="scoreboard-title">Class Scoreboard</h2>
-      <div class="scoreboard-sub">Top Ten Performers</div>
-      <div id="scoreboardWrap"></div>
-      <div class="privacy-note">Scores are visible to everyone using this quiz.</div>
+  <!-- ═══════════════ QUIZ 3: My Address ═══════════════ -->
+  <div id="screen-quiz3" class="screen">
+    <div class="card">
+      <div class="score-chip">⭐ <span id="q3-score">0</span> pts</div>
+      <span class="emoji-hero">🏡</span>
+      <div class="card-title">My Address!</div>
+      <div class="card-sub">我的地址 — Write where YOU live!</div>
+      <div style="background:#FEF3C7;border:2px dashed #FDE047;border-radius:14px;padding:12px 16px;margin-bottom:20px;font-size:0.95rem;font-weight:700;color:#713F12;text-align:left">
+        💡 地址 (address) tells us WHERE you live!<br>
+        A full address has: <strong>Number + Street + City</strong>
+      </div>
+      <div id="q3-fields">
+        <div class="address-field">
+          <div class="address-label">🔢 House Number <span class="address-zh">門牌號碼 (mén pái hào mǎ)</span></div>
+          <input class="address-input" id="addr-number" type="text" placeholder="e.g. 123">
+        </div>
+        <div class="address-field">
+          <div class="address-label">🛣️ Street Name <span class="address-zh">街道 (jiē dào)</span></div>
+          <input class="address-input" id="addr-street" type="text" placeholder="e.g. Sunshine Road">
+        </div>
+        <div class="address-field">
+          <div class="address-label">🌆 Town / City <span class="address-zh">城市 (chéng shì)</span></div>
+          <input class="address-input" id="addr-city" type="text" placeholder="e.g. Kaohsiung">
+        </div>
+      </div>
+      <div id="q3-preview" style="display:none;margin-bottom:16px;"></div>
+      <button class="btn btn-primary" onclick="submitAddress()">Done! ✅</button>
     </div>
+  </div>
 
-    <div class="results-actions">
-      <button class="btn btn-secondary" id="retakeBtn">Take it Again</button>
-      <button class="btn" id="newPlayerBtn">New Student</button>
+  <!-- ═══════════════ QUIZ 4: Where Do You Live? ═══════════════ -->
+  <div id="screen-quiz4" class="screen">
+    <div class="card">
+      <div class="score-chip">⭐ <span id="q4-score">0</span> pts</div>
+      <span class="emoji-hero">🌍</span>
+      <div class="card-title">Where Do You Live?</div>
+      <div class="card-sub">你住在哪種地方？— Tap where you live!</div>
+      <div class="where-choices">
+        <button class="where-btn" onclick="selectWhere(this,'town')">
+          <span class="where-emoji">🏘️</span>
+          <span class="where-eng">A Town</span><br>
+          <span class="where-zh">鄉鎮</span>
+        </button>
+        <button class="where-btn" onclick="selectWhere(this,'city')">
+          <span class="where-emoji">🌆</span>
+          <span class="where-eng">A City</span><br>
+          <span class="where-zh">城市</span>
+        </button>
+        <button class="where-btn" onclick="selectWhere(this,'country')">
+          <span class="where-emoji">🌾</span>
+          <span class="where-eng">The Country</span><br>
+          <span class="where-zh">鄉下</span>
+        </button>
+      </div>
+      <div id="q4-sentence" style="display:none;background:#EFF6FF;border-radius:16px;padding:14px;margin-bottom:16px;">
+        <p style="font-weight:800;color:#1E3A5F;font-size:1rem">Now write about it!</p>
+        <p style="font-size:0.95rem;color:#374151;font-weight:700;margin:8px 0">
+          I live in <span id="q4-place" style="color:#2563EB"></span>. It is a <span id="q4-type" style="color:#2563EB"></span>.
+        </p>
+      </div>
+      <button class="btn btn-green" id="q4-submit" onclick="submitWhere()" style="display:none">
+        That's me! 🎉
+      </button>
     </div>
-  </section>
+  </div>
 
+  <!-- ═══════════════ RESULTS SCREEN ═══════════════ -->
+  <div id="screen-results" class="screen">
+    <div class="card">
+      <span id="result-trophy" class="emoji-hero">🏆</span>
+      <div class="card-title" id="result-name-title">Great Job!</div>
+      <div class="result-score" id="result-score-num">0</div>
+      <div class="result-label">out of 100 points</div>
+      <span class="stars" id="result-stars">⭐⭐⭐</span>
+      <div class="result-msg" id="result-msg">Amazing work!</div>
+      <div class="divider"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goToScoreboard()">🏆 Scoreboard</button>
+        <button class="btn btn-green" onclick="newPlayer()">👤 Next Player</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SCOREBOARD SCREEN ═══════════════ -->
+  <div id="screen-scoreboard" class="screen">
+    <div class="card">
+      <span class="emoji-hero">🏆</span>
+      <div class="card-title">Scoreboard!</div>
+      <div class="card-sub">排行榜 — How did everyone do?</div>
+      <div id="scoreboard-table-wrap"></div>
+      <div class="divider"></div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="newPlayer()">👤 New Player</button>
+        <button class="btn btn-coral" onclick="clearScoreboard()">🗑️ Clear All</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<!-- Feedback Overlay -->
+<div class="feedback-overlay" id="feedback-overlay" style="display:none" onclick="closeFeedback()">
+  <div class="feedback-box" onclick="event.stopPropagation()">
+    <span class="feedback-emoji" id="fb-emoji">🎉</span>
+    <div class="feedback-title" id="fb-title">Correct!</div>
+    <div class="feedback-msg" id="fb-msg">Great job!</div>
+    <div class="feedback-pts" id="fb-pts">+10 pts</div>
+    <br><br>
+    <button class="btn btn-primary" onclick="closeFeedback()">Next ➡️</button>
+  </div>
 </div>
 
 <script>
-  const QUESTIONS = [
-    // ADJECTIVE CLAUSES
-    {
-      cat: 'Adjective Clause',
-      q: 'Identify the adjective clause in: <em>The student who studies every night earns the highest marks.</em>',
-      options: ['The student', 'who studies every night', 'earns the highest marks', 'every night'],
-      answer: 1,
-      explain: 'An adjective clause modifies a noun. <strong>"Who studies every night"</strong> describes the noun <em>student</em>.'
-    },
-    {
-      cat: 'Adjective Clause',
-      q: 'Which sentence contains an adjective clause?',
-      options: [
-        'Because it rained, we stayed indoors.',
-        'The novel that I borrowed is missing.',
-        'She announced that she would resign.',
-        'When you arrive, please call me.'
-      ],
-      answer: 1,
-      explain: 'The clause <strong>"that I borrowed"</strong> describes the noun <em>novel</em>, making it an adjective clause. The others are adverb or noun clauses.'
-    },
-    {
-      cat: 'Adjective Clause',
-      q: 'In the sentence <em>I met a writer whose first book won an award,</em> the adjective clause modifies:',
-      options: ['I', 'met', 'writer', 'award'],
-      answer: 2,
-      explain: 'The clause <strong>"whose first book won an award"</strong> tells us more about the noun <em>writer</em>.'
-    },
+// ─── GAME DATA ───
+const vocab = [
+  { word: 'address',      zh: '地址',    pinyin: 'dì zhǐ',        def: 'Tells us WHERE you live! Every home has one.',   emoji: '📍' },
+  { word: 'street',       zh: '街道',    pinyin: 'jiē dào',       def: 'The road where your home is!',                   emoji: '🛣️' },
+  { word: 'house number', zh: '門牌號碼', pinyin: 'mén pái hào mǎ',def: 'The special number on your home.',              emoji: '🔢' },
+  { word: 'city',         zh: '城市',    pinyin: 'chéng shì',     def: 'A BIG place with LOTS of people and tall buildings!', emoji: '🌆' },
+  { word: 'town',         zh: '鄉鎮',    pinyin: 'xiāng zhèn',    def: 'Smaller than a city — fewer people!',            emoji: '🏘️' },
+  { word: 'apartment',    zh: '公寓',    pinyin: 'gōng yù',       def: 'A home inside a big building.',                  emoji: '🏢' },
+  { word: 'neighborhood', zh: '社區',    pinyin: 'shè qū',        def: 'Where families live, work, and play!',           emoji: '🏡' },
+  { word: 'world',        zh: '世界',    pinyin: 'shì jiè',       def: 'Everywhere on Earth!',                           emoji: '🌍' },
+];
 
-    // ADVERB CLAUSES
-    {
-      cat: 'Adverb Clause',
-      q: 'Identify the adverb clause in: <em>Although the rain poured down, the hikers continued up the trail.</em>',
-      options: [
-        'Although the rain poured down',
-        'the hikers continued up the trail',
-        'the rain poured down',
-        'up the trail'
-      ],
-      answer: 0,
-      explain: '<strong>"Although the rain poured down"</strong> is an adverb clause of contrast. It begins with the subordinator <em>although</em> and modifies the main verb <em>continued</em>.'
-    },
-    {
-      cat: 'Adverb Clause',
-      q: 'In <em>She arrived early because she wanted a good seat,</em> what does the adverb clause tell us?',
-      options: ['When', 'Where', 'Why', 'How'],
-      answer: 2,
-      explain: 'Adverb clauses beginning with <em>because</em> answer the question <strong>"why?"</strong> — they show reason or cause.'
-    },
-    {
-      cat: 'Adverb Clause',
-      q: 'Which sentence contains an adverb clause of time?',
-      options: [
-        'The girl who sings has a beautiful voice.',
-        'Whenever I visit my grandmother, she bakes bread.',
-        'I know that he is honest.',
-        'The book on the table belongs to me.'
-      ],
-      answer: 1,
-      explain: '<strong>"Whenever I visit my grandmother"</strong> begins with <em>whenever</em> and tells us <em>when</em> the action happens — an adverb clause of time.'
-    },
+const fillBlankQ = [
+  {
+    before: 'The', blank: '___',  after: 'is very big, and people live in all kinds of places.',
+    answer: 'world',
+    choices: [
+      { word: 'world',       zh: '世界', emoji: '🌍' },
+      { word: 'city',        zh: '城市', emoji: '🌆' },
+      { word: 'apartment',   zh: '公寓', emoji: '🏢' },
+      { word: 'street',      zh: '街道', emoji: '🛣️' },
+    ],
+    hint: '🌍 This is the biggest place of all!'
+  },
+  {
+    before: 'Some homes are houses. Some homes are', blank: '___', after: '.',
+    answer: 'apartments',
+    choices: [
+      { word: 'apartments',  zh: '公寓', emoji: '🏢' },
+      { word: 'towns',       zh: '鄉鎮', emoji: '🏘️' },
+      { word: 'streets',     zh: '街道', emoji: '🛣️' },
+      { word: 'cities',      zh: '城市', emoji: '🌆' },
+    ],
+    hint: '🏢 This type of home is inside a tall building!'
+  },
+  {
+    before: 'A', blank: '___', after: 'is where families live, work, and play.',
+    answer: 'neighborhood',
+    choices: [
+      { word: 'neighborhood', zh: '社區', emoji: '🏡' },
+      { word: 'world',        zh: '世界', emoji: '🌍' },
+      { word: 'city',         zh: '城市', emoji: '🌆' },
+      { word: 'address',      zh: '地址', emoji: '📍' },
+    ],
+    hint: '🏡 社區 — a community!'
+  },
+  {
+    before: 'Cities are like very big', blank: '___', after: '.',
+    answer: 'towns',
+    choices: [
+      { word: 'towns',       zh: '鄉鎮', emoji: '🏘️' },
+      { word: 'apartments',  zh: '公寓', emoji: '🏢' },
+      { word: 'worlds',      zh: '世界', emoji: '🌍' },
+      { word: 'addresses',   zh: '地址', emoji: '📍' },
+    ],
+    hint: '🏘️ It is SMALLER than a city!'
+  },
+  {
+    before: 'There are a lot of people and big buildings in a', blank: '___', after: '.',
+    answer: 'city',
+    choices: [
+      { word: 'city',        zh: '城市', emoji: '🌆' },
+      { word: 'town',        zh: '鄉鎮', emoji: '🏘️' },
+      { word: 'street',      zh: '街道', emoji: '🛣️' },
+      { word: 'neighborhood',zh: '社區', emoji: '🏡' },
+    ],
+    hint: '🌆 城市 — very big with skyscrapers!'
+  },
+];
 
-    // NOUN CLAUSES
-    {
-      cat: 'Noun Clause',
-      q: 'Identify the noun clause in: <em>What the witness said surprised the entire jury.</em>',
-      options: ['What the witness said', 'surprised the entire jury', 'the witness said', 'the entire jury'],
-      answer: 0,
-      explain: '<strong>"What the witness said"</strong> functions as the subject of the verb <em>surprised</em> — that is the role of a noun clause.'
-    },
-    {
-      cat: 'Noun Clause',
-      q: 'The noun clause in <em>I do not know whether she will accept the offer</em> functions as:',
-      options: ['Subject', 'Object of the verb', 'Complement of a preposition', 'Adverbial'],
-      answer: 1,
-      explain: 'The clause <strong>"whether she will accept the offer"</strong> is the direct object of the verb <em>know</em> — it answers <em>"know what?"</em>'
-    },
-    {
-      cat: 'Noun Clause',
-      q: 'Which sentence contains a noun clause?',
-      options: [
-        'The musician who composed it is famous.',
-        'Whoever finishes first will receive the prize.',
-        'After we had finished, we left the hall.',
-        'The park where we played has been closed.'
-      ],
-      answer: 1,
-      explain: '<strong>"Whoever finishes first"</strong> is a noun clause acting as the subject. The other sentences contain adjective or adverb clauses.'
-    },
+const matchPairs = [
+  { word: 'address',      def: '📍 WHERE you live',          wZh: '地址',    dZh: '你住的地方' },
+  { word: 'street',       def: '🛣️ The road by your home',   wZh: '街道',    dZh: '你家旁的路' },
+  { word: 'city',         def: '🌆 Big place, many people',  wZh: '城市',    dZh: '大城鎮，人很多' },
+  { word: 'neighborhood', def: '🏡 Where we live & play',    wZh: '社區',    dZh: '生活和玩耍的地方' },
+  { word: 'apartment',    def: '🏢 Home in a big building',  wZh: '公寓',    dZh: '高樓裡的家' },
+];
 
-    // SENTENCE HOOKS
-    {
-      cat: 'Sentence Hook',
-      q: 'Which type of hook opens this essay: <em>Did you know that nearly eighty percent of teenagers check their phones within five minutes of waking up?</em>',
-      options: ['Quotation hook', 'Rhetorical question hook', 'Statistic hook', 'Anecdote hook'],
-      answer: 2,
-      explain: 'A hook that opens with a number or data point is a <strong>statistic hook</strong>. It also uses a question form, but the strength of the hook lies in the figure itself.'
-    },
-    {
-      cat: 'Sentence Hook',
-      q: 'A hook that opens an essay with a brief, true-sounding story is called a:',
-      options: ['Rhetorical question', 'Anecdote', 'Bold statement', 'Definition'],
-      answer: 1,
-      explain: 'An <strong>anecdote</strong> hook draws the reader in through a short narrative. It is especially effective for emotionally driven topics.'
-    },
-    {
-      cat: 'Sentence Hook',
-      q: 'The main purpose of a sentence hook is to:',
-      options: [
-        'Summarize the essay in one line',
-        'Capture the reader\u2019s attention from the very first sentence',
-        'List the supporting arguments',
-        'State the writer\u2019s final conclusion'
-      ],
-      answer: 1,
-      explain: 'A hook is the opening line of an essay. Its job is to <strong>seize the reader\u2019s attention</strong> so they want to keep reading.'
-    },
+// ─── GAME STATE ───
+let playerName   = '';
+let currentScore = 0;
+let scoreboard   = [];
 
-    // INTRODUCTION
-    {
-      cat: 'Essay: Introduction',
-      q: 'A complete opinion-essay introduction generally contains:',
-      options: [
-        'Only the thesis statement',
-        'A hook, background or context, and a thesis statement',
-        'A counter argument and a conclusion',
-        'Two body arguments with evidence'
-      ],
-      answer: 1,
-      explain: 'A strong introduction moves from <strong>hook → background information → thesis statement</strong>, narrowing the focus of the essay.'
-    },
+let vocabIdx = 0;
+let q1Idx    = 0;
+let q1Score  = 0;
+let q2Score  = 0;
+let q3Done   = false;
+let q4Done   = false;
 
-    // ARGUMENT 1
-    {
-      cat: 'Essay: Argument One',
-      q: 'A strong first body paragraph should:',
-      options: [
-        'Disagree with your own thesis',
-        'Present your strongest supporting point with evidence and explanation',
-        'Summarize the entire essay',
-        'Consist only of rhetorical questions'
-      ],
-      answer: 1,
-      explain: 'Lead with your <strong>most convincing argument</strong>. Support it with evidence (facts, examples, expert opinion) and explain how that evidence proves your thesis.'
-    },
+let matchSelected = { type: null, idx: null };
+let matchMatched  = [];
 
-    // ARGUMENT 2
-    {
-      cat: 'Essay: Argument Two',
-      q: 'The second body paragraph in an opinion essay should:',
-      options: [
-        'Repeat the first argument in different words',
-        'Add a second, different supporting point with its own evidence',
-        'Begin the conclusion',
-        'Introduce a topic unrelated to the thesis'
-      ],
-      answer: 1,
-      explain: 'Argument two must <strong>add new support</strong>, not repeat. Each body paragraph should advance a fresh reason that backs up the thesis.'
-    },
+let feedbackCallback = null;
 
-    // COUNTER ARGUMENT
-    {
-      cat: 'Essay: Counter Argument',
-      q: 'The purpose of a counter argument paragraph is to:',
-      options: [
-        'Ignore opposing views entirely',
-        'Confuse the reader on purpose',
-        'Acknowledge the opposing view and then refute it with reasons',
-        'Restate the introduction'
-      ],
-      answer: 2,
-      explain: 'A counter argument <strong>strengthens</strong> your essay. You show fairness by acknowledging the other side, then refute it to prove your position is still stronger.'
-    },
-    {
-      cat: 'Essay: Counter Argument',
-      q: 'After presenting an opposing viewpoint, the writer should next:',
-      options: [
-        'End the essay immediately',
-        'Refute the opposing view with logic or evidence (a rebuttal)',
-        'Fully agree with it',
-        'Repeat it for emphasis'
-      ],
-      answer: 1,
-      explain: 'The counter argument is always followed by a <strong>rebuttal</strong> — evidence or reasoning that explains why the opposing view is weaker than the writer\u2019s position.'
-    },
+// ─── STORAGE ───
+async function loadScoreboard() {
+  try {
+    const r = await window.storage.get('home-game-scores');
+    return r ? JSON.parse(r.value) : [];
+  } catch { return []; }
+}
+async function saveScore(name, score) {
+  try {
+    const board = await loadScoreboard();
+    board.push({ name, score, medal: score >= 90 ? '🥇' : score >= 70 ? '🥈' : score >= 50 ? '🥉' : '🌟' });
+    board.sort((a, b) => b.score - a.score);
+    await window.storage.set('home-game-scores', JSON.stringify(board));
+    return board;
+  } catch { return []; }
+}
 
-    // CONCLUSION
-    {
-      cat: 'Essay: Conclusion',
-      q: 'A strong conclusion to an opinion essay should:',
-      options: [
-        'Introduce a completely new argument',
-        'Restate the thesis, summarize the main points, and leave a final thought',
-        'Consist only of rhetorical questions',
-        'Present statistics for the first time'
-      ],
-      answer: 1,
-      explain: 'Conclusions <strong>restate the thesis</strong> in fresh words, briefly recap the key arguments, and end with a final reflection or call to action.'
-    },
-    {
-      cat: 'Essay: Conclusion',
-      q: 'Which of the following is NOT an appropriate way to end an opinion essay?',
-      options: [
-        'A call to action',
-        'A final reflection that connects to the bigger picture',
-        'Introducing brand-new evidence not seen earlier',
-        'A restatement of the thesis in different words'
-      ],
-      answer: 2,
-      explain: 'New evidence belongs in the body paragraphs. Conclusions <strong>synthesize</strong> what has already been said — they do not introduce fresh information.'
-    },
-    {
-      cat: 'Essay: Conclusion',
-      q: 'A "call to action" in an essay conclusion asks the reader to:',
-      options: [
-        'Do something, change a behavior, or think differently',
-        'Read another essay',
-        'Remember a statistic',
-        'Compare advantages and disadvantages'
-      ],
-      answer: 0,
-      explain: 'A <strong>call to action</strong> urges the reader to <em>act</em> — to change their view, take a stand, or do something based on the essay\u2019s argument.'
-    }
-  ];
+// ─── SCREEN TRANSITIONS ───
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const s = document.getElementById(id);
+  s.classList.add('active');
+}
 
-  // STATE
-  let state = {
-    name: '',
-    current: 0,
-    score: 0,
-    answers: [],
-    locked: false
-  };
+// ─── WELCOME → VOCAB ───
+function startGame() {
+  const n = document.getElementById('playerName').value.trim();
+  if (!n) { alert('Please type your name first! 請輸入你的名字！'); return; }
+  playerName   = n;
+  currentScore = 0;
+  q1Idx = q1Score = q2Score = 0;
+  q3Done = q4Done = false;
+  vocabIdx = 0;
+  matchMatched  = [];
+  matchSelected = { type: null, idx: null };
+  showVocab();
+  showScreen('screen-vocab');
+}
 
-  // ELEMENTS
-  const $ = (id) => document.getElementById(id);
-  const welcomeEl = $('welcome');
-  const quizEl = $('quiz');
-  const resultsEl = $('results');
-  const nameInput = $('nameInput');
-  const startBtn = $('startBtn');
+// ─── VOCAB ───
+function showVocab() {
+  const v = vocab[vocabIdx];
+  const pct = Math.round((vocabIdx / vocab.length) * 100);
+  document.getElementById('vocab-progress').style.width = pct + '%';
+  document.getElementById('vocab-counter').textContent = `Word ${vocabIdx + 1} of ${vocab.length}`;
+  document.getElementById('vocab-score').textContent = currentScore;
+  document.getElementById('vocab-next-btn').textContent =
+    vocabIdx < vocab.length - 1 ? 'Next Word ➡️' : 'Start Quiz! 🎯';
+  document.getElementById('vocab-display').innerHTML = `
+    <div class="vocab-card">
+      <div class="vocab-word">${v.word}</div>
+      <span class="vocab-emoji">${v.emoji}</span>
+      <div>
+        <div class="zh-bubble"><span class="zh-text">${v.zh}</span></div>
+        <div class="pinyin">${v.pinyin}</div>
+      </div>
+      <div class="vocab-def">${v.def}</div>
+    </div>`;
+}
+function nextVocab() {
+  vocabIdx++;
+  if (vocabIdx < vocab.length) { showVocab(); }
+  else { initQ1(); showScreen('screen-quiz1'); }
+}
 
-  // INPUT SANITIZATION
-  function cleanName(raw) {
-    return raw.replace(/[^A-Za-z\s'.\-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 24);
-  }
+// ─── QUIZ 1: Fill in Blank ───
+function initQ1() {
+  q1Idx = 0; q1Score = 0;
+  renderQ1();
+}
+function renderQ1() {
+  const q = fillBlankQ[q1Idx];
+  const pct = Math.round(((q1Idx) / fillBlankQ.length) * 100);
+  document.getElementById('q1-progress').style.width = pct + '%';
+  document.getElementById('q1-score').textContent = currentScore;
 
-  nameInput.addEventListener('input', () => {
-    const cleaned = cleanName(nameInput.value);
-    if (cleaned !== nameInput.value) nameInput.value = cleaned;
-    startBtn.disabled = cleaned.length < 2;
-  });
+  // shuffle choices
+  const choices = [...q.choices].sort(() => Math.random() - 0.5);
 
-  nameInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !startBtn.disabled) startQuiz();
-  });
+  document.getElementById('q1-display').innerHTML = `
+    <p style="font-weight:800;color:#6B7280;font-size:0.9rem;margin-bottom:10px">
+      Question ${q1Idx + 1} of ${fillBlankQ.length}
+    </p>
+    <div class="question-text">
+      ${q.before} <span style="background:#FDE68A;padding:2px 10px;border-radius:8px;color:#92400E">${q.blank}</span> ${q.after}
+    </div>
+    <div class="question-hint">${q.hint}</div>
+    <div class="choices-grid" id="q1-choices">
+      ${choices.map((c, i) => `
+        <button class="choice-btn" id="qc-${i}" onclick="answerQ1(this,'${c.word}')">
+          ${c.emoji} ${c.word}
+          <span class="choice-zh">${c.zh}</span>
+        </button>`).join('')}
+    </div>`;
+}
+function answerQ1(btn, chosen) {
+  const q = fillBlankQ[q1Idx];
+  const correct = chosen === q.answer || chosen.replace(/s$/,'') === q.answer || q.answer === chosen.replace(/s$/,'');
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
 
-  startBtn.addEventListener('click', startQuiz);
-
-  function startQuiz() {
-    state.name = cleanName(nameInput.value);
-    if (state.name.length < 2) return;
-    state.current = 0;
-    state.score = 0;
-    state.answers = [];
-    state.locked = false;
-    $('quizName').textContent = state.name;
-    welcomeEl.classList.add('hidden');
-    resultsEl.classList.add('hidden');
-    quizEl.classList.remove('hidden');
-    renderQuestion();
-  }
-
-  function renderQuestion() {
-    const q = QUESTIONS[state.current];
-    state.locked = false;
-    $('quizCounter').textContent = `Question ${state.current + 1} of ${QUESTIONS.length}`;
-    $('progressFill').style.width = `${((state.current) / QUESTIONS.length) * 100}%`;
-    $('categoryTag').textContent = q.cat;
-    $('questionText').innerHTML = q.q;
-    $('runningScore').textContent = `Score: ${state.score}`;
-
-    const container = $('optionsContainer');
-    container.innerHTML = '';
-    const letters = ['A', 'B', 'C', 'D'];
-    q.options.forEach((opt, i) => {
-      const div = document.createElement('div');
-      div.className = 'option';
-      div.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt}</span>`;
-      div.addEventListener('click', () => selectOption(i, div));
-      container.appendChild(div);
+  if (correct) {
+    btn.classList.add('correct');
+    q1Score += 10; currentScore += 10;
+    confetti();
+    showFeedback(true, `${q.answer.toUpperCase()} — ${vocab.find(v=>v.word===q.answer||v.word===q.answer.replace(/s$/, ''))?.zh || ''}`, '+10 pts! 🎉', () => {
+      q1Idx++;
+      if (q1Idx < fillBlankQ.length) { renderQ1(); }
+      else { initQ2(); showScreen('screen-quiz2'); }
     });
-
-    $('feedback').classList.remove('show');
-    $('feedback').innerHTML = '';
-    const nextBtn = $('nextBtn');
-    nextBtn.disabled = true;
-    nextBtn.textContent = state.current === QUESTIONS.length - 1 ? 'See Results' : 'Next';
-  }
-
-  function selectOption(index, optionEl) {
-    if (state.locked) return;
-    state.locked = true;
-    const q = QUESTIONS[state.current];
-    const allOpts = document.querySelectorAll('.option');
-    allOpts.forEach((el, i) => {
-      el.classList.add('disabled');
-      if (i === q.answer) el.classList.add('correct');
+  } else {
+    btn.classList.add('wrong');
+    showFeedback(false, `The answer is: ${q.answer}`, 'Keep going! 💪', () => {
+      q1Idx++;
+      if (q1Idx < fillBlankQ.length) { renderQ1(); }
+      else { initQ2(); showScreen('screen-quiz2'); }
     });
-    const correct = index === q.answer;
+  }
+}
+
+// ─── QUIZ 2: Matching ───
+function initQ2() {
+  matchMatched = [];
+  matchSelected = { type: null, idx: null };
+  renderQ2();
+}
+function renderQ2() {
+  document.getElementById('q2-score').textContent = currentScore;
+  const shuffledDefs = [...matchPairs].sort(() => Math.random() - 0.5);
+
+  document.getElementById('q2-display').innerHTML = `
+    <p style="font-size:0.9rem;font-weight:800;color:#6B7280;margin-bottom:12px">
+      Tap a word 👈 then tap its meaning 👉
+    </p>
+    <div class="match-grid">
+      <div class="match-col" id="match-words">
+        ${matchPairs.map((p, i) => `
+          <button class="match-btn match-word" id="mw-${i}" onclick="selectMatch('word',${i})">
+            ${p.word}<br><small style="opacity:0.6">${p.wZh}</small>
+          </button>`).join('')}
+      </div>
+      <div class="match-col" id="match-defs">
+        ${shuffledDefs.map((p, i) => `
+          <button class="match-btn match-def" id="md-${i}" data-word="${p.word}" onclick="selectMatch('def',${i})">
+            ${p.def}<br><small style="opacity:0.6">${p.dZh}</small>
+          </button>`).join('')}
+      </div>
+    </div>
+    <div id="match-status" style="margin-top:12px;font-weight:800;font-size:0.95rem;color:#374151"></div>`;
+}
+function selectMatch(type, idx) {
+  const el = document.getElementById(type === 'word' ? `mw-${idx}` : `md-${idx}`);
+  if (el.classList.contains('used') || el.classList.contains('matched-ok')) return;
+
+  // deselect same type
+  document.querySelectorAll(type === 'word' ? '.match-word' : '.match-def')
+    .forEach(b => b.classList.remove('selected'));
+
+  el.classList.add('selected');
+  matchSelected[type] = idx;
+
+  // Check if both selected
+  if (matchSelected.word !== null && matchSelected.def !== null) {
+    const wordEl = document.getElementById(`mw-${matchSelected.word}`);
+    const defEl  = document.getElementById(`md-${matchSelected.def}`);
+    const wordName = matchPairs[matchSelected.word].word;
+    const defWord  = defEl.getAttribute('data-word');
+    const correct  = wordName === defWord;
+
     if (correct) {
-      state.score++;
-      $('runningScore').textContent = `Score: ${state.score}`;
-    } else {
-      optionEl.classList.add('incorrect');
-    }
-    state.answers.push({ category: q.cat, correct });
-
-    const fb = $('feedback');
-    fb.innerHTML = (correct
-      ? '<strong>Correct.</strong> '
-      : '<strong>Not quite.</strong> '
-    ) + q.explain;
-    fb.classList.add('show');
-
-    $('nextBtn').disabled = false;
-  }
-
-  $('nextBtn').addEventListener('click', () => {
-    if (state.current < QUESTIONS.length - 1) {
-      state.current++;
-      renderQuestion();
-    } else {
-      finishQuiz();
-    }
-  });
-
-  async function finishQuiz() {
-    quizEl.classList.add('hidden');
-    resultsEl.classList.remove('hidden');
-    const total = QUESTIONS.length;
-    const pct = Math.round((state.score / total) * 100);
-    $('finalScore').textContent = state.score;
-    $('scorePercent').textContent = `${pct} percent`;
-    $('verdict').textContent = getVerdict(pct);
-
-    renderBreakdown();
-    await saveAndRenderScoreboard();
-  }
-
-  function getVerdict(pct) {
-    if (pct === 100) return 'A flawless performance.';
-    if (pct >= 90) return 'Excellent — near mastery.';
-    if (pct >= 80) return 'Strong work, with a few refinements left.';
-    if (pct >= 70) return 'Solid grasp; review the weaker topics.';
-    if (pct >= 60) return 'Passing, but there is real ground to cover.';
-    if (pct >= 50) return 'A foundation exists. Time to study.';
-    return 'A fresh review of the material is in order.';
-  }
-
-  function renderBreakdown() {
-    const groups = {};
-    state.answers.forEach(a => {
-      if (!groups[a.category]) groups[a.category] = { correct: 0, total: 0 };
-      groups[a.category].total++;
-      if (a.correct) groups[a.category].correct++;
-    });
-    const wrap = $('breakdownList');
-    wrap.innerHTML = '';
-    Object.keys(groups).forEach(cat => {
-      const g = groups[cat];
-      const row = document.createElement('div');
-      row.className = 'breakdown-row';
-      row.innerHTML = `<span class="topic">${cat}</span><span class="score-cell">${g.correct} / ${g.total}</span>`;
-      wrap.appendChild(row);
-    });
-  }
-
-  // SCOREBOARD via window.storage (shared)
-  const BOARD_KEY = 'quiz_scoreboard_v1';
-
-  async function loadBoard() {
-    try {
-      const res = await window.storage.get(BOARD_KEY, true);
-      if (res && res.value) {
-        return JSON.parse(res.value);
+      wordEl.classList.remove('selected'); wordEl.classList.add('matched-ok', 'used');
+      defEl.classList.remove('selected');  defEl.classList.add('matched-ok', 'used');
+      matchMatched.push(wordName);
+      q2Score += 10; currentScore += 10;
+      document.getElementById('q2-score').textContent = currentScore;
+      document.getElementById('match-status').textContent = `✅ Matched ${matchMatched.length} of ${matchPairs.length}!`;
+      confetti();
+      if (matchMatched.length === matchPairs.length) {
+        setTimeout(() => { showScreen('screen-quiz3'); }, 900);
       }
-    } catch (e) {
-      // key not found is normal
+    } else {
+      wordEl.classList.add('matched-fail'); defEl.classList.add('matched-fail');
+      setTimeout(() => {
+        wordEl.classList.remove('selected','matched-fail');
+        defEl.classList.remove('selected','matched-fail');
+      }, 600);
     }
-    return [];
+    matchSelected = { word: null, def: null };
   }
+}
 
-  async function saveBoard(board) {
-    try {
-      await window.storage.set(BOARD_KEY, JSON.stringify(board), true);
-    } catch (e) {
-      console.error('Could not save scoreboard:', e);
-    }
+// ─── QUIZ 3: My Address ───
+function submitAddress() {
+  const num    = document.getElementById('addr-number').value.trim();
+  const street = document.getElementById('addr-street').value.trim();
+  const city   = document.getElementById('addr-city').value.trim();
+  if (!num && !street && !city) {
+    document.getElementById('addr-city').focus();
+    return;
   }
+  const preview = document.getElementById('q3-preview');
+  preview.style.display = 'block';
+  preview.innerHTML = `
+    <div style="background:#F0FDF4;border:2px solid #86EFAC;border-radius:16px;padding:16px;text-align:left;">
+      <p style="font-family:'Fredoka One',cursive;color:#166534;font-size:1.1rem;margin-bottom:8px">📍 My Address:</p>
+      <p style="font-size:1.1rem;font-weight:800;color:#1E3A5F">
+        ${[num, street, city].filter(Boolean).join(', ')}
+      </p>
+      <p style="font-size:0.85rem;color:#16A34A;margin-top:6px">地址 ✅</p>
+    </div>`;
+  q3Done = true;
+  setTimeout(() => { showScreen('screen-quiz4'); }, 1200);
+}
 
-  async function saveAndRenderScoreboard() {
-    const wrap = $('scoreboardWrap');
-    wrap.innerHTML = '<div class="empty-board">Loading scoreboard...</div>';
-
-    let board = await loadBoard();
-    const entry = {
-      name: state.name,
-      score: state.score,
-      total: QUESTIONS.length,
-      pct: Math.round((state.score / QUESTIONS.length) * 100),
-      ts: Date.now()
-    };
-    board.push(entry);
-    // sort: highest score first, then earliest timestamp wins ties
-    board.sort((a, b) => b.score - a.score || a.ts - b.ts);
-    // keep top 50 internally, show top 10
-    board = board.slice(0, 50);
-    await saveBoard(board);
-
-    renderBoard(board, entry);
-  }
-
-  function renderBoard(board, mine) {
-    const wrap = $('scoreboardWrap');
-    if (!board.length) {
-      wrap.innerHTML = '<div class="empty-board">No scores yet.</div>';
-      return;
-    }
-    const top = board.slice(0, 10);
-    const myIndex = board.findIndex(e => e.ts === mine.ts && e.name === mine.name);
-
-    let html = `<table class="scoreboard-table"><thead><tr>
-      <th>Rank</th><th>Name</th><th>Score</th></tr></thead><tbody>`;
-    top.forEach((e, i) => {
-      const isMe = e.ts === mine.ts && e.name === mine.name;
-      html += `<tr class="${isMe ? 'you-row' : ''}">
-        <td class="rank">${i + 1}</td>
-        <td class="name-cell">${escapeHtml(e.name)}</td>
-        <td>${e.score} / ${e.total}</td></tr>`;
-    });
-    html += `</tbody></table>`;
-    if (myIndex >= 10) {
-      html += `<div class="privacy-note">Your rank: ${myIndex + 1} of ${board.length}</div>`;
-    }
-    wrap.innerHTML = html;
-  }
-
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
-  }
-
-  $('retakeBtn').addEventListener('click', () => {
-    startQuiz();
+// ─── QUIZ 4: Where Do You Live? ───
+let whereChoice = null;
+function selectWhere(btn, type) {
+  document.querySelectorAll('.where-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  whereChoice = type;
+  const city = document.getElementById('addr-city').value.trim() || 'my hometown';
+  const typeMap = { town: 'town 🏘️', city: 'city 🌆', country: 'countryside 🌾' };
+  document.getElementById('q4-place').textContent = city;
+  document.getElementById('q4-type').textContent = typeMap[type];
+  document.getElementById('q4-sentence').style.display = 'block';
+  document.getElementById('q4-submit').style.display = 'inline-block';
+}
+function submitWhere() {
+  if (!whereChoice) return;
+  q4Done = true;
+  currentScore += 10;
+  confetti();
+  showFeedback(true, 'Great! You know where you live! 🏡', '+10 pts!', () => {
+    finishGame();
   });
+}
 
-  $('newPlayerBtn').addEventListener('click', () => {
-    nameInput.value = '';
-    startBtn.disabled = true;
-    resultsEl.classList.add('hidden');
-    quizEl.classList.add('hidden');
-    welcomeEl.classList.remove('hidden');
-    nameInput.focus();
-  });
+// ─── FINISH & RESULTS ───
+async function finishGame() {
+  const score = currentScore;
+  const stars = score >= 90 ? '⭐⭐⭐' : score >= 60 ? '⭐⭐' : '⭐';
+  const trophy = score >= 90 ? '🏆' : score >= 60 ? '🎖️' : '🌟';
+  const msgs = [
+    score >= 90 ? '超棒！ You are an ADDRESS EXPERT! 🎓' : '',
+    score >= 70 && score < 90 ? '很好！ Great job, keep it up! 👍' : '',
+    score >= 50 && score < 70 ? '不錯！ Good work! Practice makes perfect! 💪' : '',
+    score < 50 ? '加油！ Keep trying — you can do it! 🌈' : '',
+  ].find(m => m !== '') || 'Well done!';
 
-  // focus name input on load
-  nameInput.focus();
+  document.getElementById('result-trophy').textContent    = trophy;
+  document.getElementById('result-name-title').textContent = `${playerName}, you got...`;
+  document.getElementById('result-score-num').textContent  = score;
+  document.getElementById('result-stars').textContent      = stars;
+  document.getElementById('result-msg').textContent        = msgs;
+  document.getElementById('q4-score').textContent          = currentScore;
+
+  scoreboard = await saveScore(playerName, score);
+  showScreen('screen-results');
+  confetti(); confetti();
+}
+
+// ─── SCOREBOARD ───
+async function goToScoreboard() {
+  const board = await loadScoreboard();
+  renderScoreboard(board);
+  showScreen('screen-scoreboard');
+}
+function renderScoreboard(board) {
+  const medals = ['🥇','🥈','🥉'];
+  if (!board || board.length === 0) {
+    document.getElementById('scoreboard-table-wrap').innerHTML =
+      '<p class="no-scores">No scores yet! Be the first to play! 🌟</p>';
+    return;
+  }
+  document.getElementById('scoreboard-table-wrap').innerHTML = `
+    <table class="scoreboard-table">
+      <thead><tr><th>#</th><th>🏆 Name / 名字</th><th>⭐ Score</th></tr></thead>
+      <tbody>
+        ${board.map((p, i) => `
+          <tr class="${i < 3 ? 'rank-'+(i+1) : ''}">
+            <td><span class="rank-medal">${medals[i] || (i+1)}</span></td>
+            <td>${p.name}</td>
+            <td style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:#2563EB">${p.score}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+async function clearScoreboard() {
+  if (!confirm('Clear all scores? 清除所有分數？')) return;
+  try { await window.storage.delete('home-game-scores'); } catch {}
+  renderScoreboard([]);
+}
+function newPlayer() {
+  document.getElementById('playerName').value = '';
+  showScreen('screen-welcome');
+}
+
+// ─── FEEDBACK POPUP ───
+function showFeedback(correct, msg, pts, cb) {
+  feedbackCallback = cb;
+  document.getElementById('fb-emoji').textContent = correct ? '🎉' : '💪';
+  document.getElementById('fb-title').textContent = correct ? 'Correct! ✅' : 'Not quite!';
+  document.getElementById('fb-title').style.color = correct ? '#16A34A' : '#DC2626';
+  document.getElementById('fb-msg').textContent   = msg;
+  document.getElementById('fb-pts').textContent   = pts;
+  document.getElementById('fb-pts').style.color   = correct ? '#16A34A' : '#6B7280';
+  document.getElementById('feedback-overlay').style.display = 'flex';
+}
+function closeFeedback() {
+  document.getElementById('feedback-overlay').style.display = 'none';
+  if (feedbackCallback) { feedbackCallback(); feedbackCallback = null; }
+}
+
+// ─── CONFETTI ───
+function confetti() {
+  const colors = ['#FFD93D','#FF6B6B','#6BCB77','#5BC8F5','#A78BFA','#FFA94D'];
+  for (let i = 0; i < 24; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `
+      left: ${Math.random()*100}vw;
+      top: -20px;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-delay: ${Math.random()*0.6}s;
+      animation-duration: ${0.9 + Math.random()*0.6}s;
+      transform: rotate(${Math.random()*360}deg);
+      border-radius: ${Math.random()>0.5?'50%':'2px'};
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1800);
+  }
+}
 </script>
 </body>
 </html>
